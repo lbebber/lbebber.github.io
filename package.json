@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "mkdir -p public/img",
+    "pug": "pug src/pug/index.pug -o public/", 
+    "svg": "svgo -f src/svg/ -o public/img/",
+    "build":"npm run pug && npm run svg"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "pug": "^2.0.0-beta6"
+    "http-server": "^0.9.0",
+    "pug": "^2.0.0-beta6",
+    "pug-cli": "^1.0.0-alpha6"
   }
 }
