@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+tmux new-session -d
+tmux send-keys 'npm run start' C-m
+tmux attach

@@ -1,1 +1,21 @@
-<html><head><title>oi</title></head><body><oi></oi></body></html>
+<html><head><title>oi</title><link rel="stylesheet" href="css/style.css"/></head><body><header class="Header"><div class="Scene"><div class="Scene-sky"></div><canvas class="Scene-stars"></canvas><canvas class="Scene-mountains"></canvas></div><h1 class="Title"><div class="Title-big">Lucas Bebber</div><div class="Title-small">Creative Developer</div></h1></header>oi<script id="vs" type="x-shader/vertex"> <script id="vs" type="x-shader/vertex">attribute vec3 position;
+
+void main() {
+
+  gl_Position = vec4( position, 1.0 );
+
+}
+
+</script><script id="fs" type="x-shader/fragment">uniform float time;
+uniform vec2 resolution;
+
+void main( void ) {
+
+  vec2 position = - 1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
+  float red = abs( sin( position.x * position.y + time / 5.0 ) );
+  float green = abs( sin( position.x * position.y + time / 4.0 ) );
+  float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+  gl_FragColor = vec4( red, green, blue, 1.0 );
+
+}
+</script></script> <script src="js/main.js"></script></body></html>

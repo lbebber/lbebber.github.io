@@ -5,10 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prebuild": "mkdir -p public/img",
-    "pug": "pug src/pug/index.pug -o public/", 
+    "prebuild": "mkdir -p public/img && mkdir -p public/css && mkdir -p public/js",
+    "pug": "pug src/pug/index.pug -o public/",
     "svg": "svgo -f src/svg/ -o public/img/",
-    "build":"npm run pug && npm run svg"
+    "css": "stylus src/stylus/main.styl -c -o public/css/style.css",
+    "js": "uglifyjs src/js/main.js --mangle --compress -o public/js/main.js",
+    "build": "npm run pug && npm run svg && npm run css && npm run js",
+    "start": "http-server public/"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,8 @@
   "devDependencies": {
     "http-server": "^0.9.0",
     "pug": "^2.0.0-beta6",
-    "pug-cli": "^1.0.0-alpha6"
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "^0.54.5",
+    "uglify-js": "^2.7.3"
   }
 }

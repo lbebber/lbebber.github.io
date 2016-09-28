@@ -1,5 +1,18 @@
 html
   head
     title oi
+    link(rel='stylesheet',href='css/style.css')
   body
-    oi
+
+    header.Header
+      .Scene
+        .Scene-sky
+        canvas.Scene-stars
+        canvas.Scene-mountains
+      h1.Title
+        div.Title-big Lucas Bebber
+        div.Title-small Creative Developer
+    | oi
+
+    include shaders
+    script(src='js/main.js')
