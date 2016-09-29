@@ -1,80 +1,277 @@
 (function(){
-  function rect(x,y,w,h,ctx){
-    ctx.fillRect(x-(w/2),y-(h/2),w,h);
+  var colors={
+    whiteish : '#FFEDDB',
+    yellow : '#F7F7B6',
+    pink : '#E96F92',
+    purple : '#75517D',
+    blackish : '#1B2947',
+    green : '#54fad4',
   }
-  function square(x,y,size,ctx){
-    rect(x,y,size,size,ctx);
+  function createCanvas(width,height){
+    var canvas=document.createElement('canvas');
+    setAttribute('width',width,canvas);
+    setAttribute('height',height,canvas);
+    return canvas;
   }
-  function square45(x,y,size,ctx){
+  function drawStar(x,y,size,scale,ctx){
     ctx.save();
     ctx.translate(x,y);
+    ctx.scale(scale,scale);
     ctx.rotate(Math.PI/4);
-    square(0,0,size,ctx);
+    ctx.fillRect(-size/2,-size/2,size,size);
     ctx.restore();
+  }
+  function querySelector(selector){
+    return document.querySelector(selector);
+  }
+  function getContext(canvas){
+    return canvas.getContext('2d');
+  }
+  function getBounds(element){
+    return element.getBoundingClientRect();
+  }
+  function setAttribute(attr,value,element){
+    element.setAttribute(attr,value);
+  }
+  function setFillStyle(fill,ctx){
+    ctx.fillStyle=fill;
+  }
+  function random(max){
+    return Math.random()*max;
+  }
+  function smooth(x){
+    return x*x*(3 - 2*x);
+  }
+  function repeat(times,callback){
+    for(var i=0;i<times;i++){
+      callback(i);
+    }
+  }
+  function forEach(array,callback){
+    for(var i=0;i<array.length;i++){
+      callback(array[i],i);
+    }
+  }
+  var raf=requestAnimationFrame;
+  function sizeToBounds(bounds,element){
+    setAttribute('width',bounds.width,element);
+    setAttribute('height',bounds.height,element);
   }
 
   (function(){
-    var canvas=document.querySelector('.Scene-mountains');
-    var ctx=canvas.getContext('2d');
-    var bounds=canvas.getBoundingClientRect();
-    canvas.setAttribute('width',bounds.width);
-    canvas.setAttribute('height',bounds.height);
+    var canvas=querySelector('.Scene-mountains');
+    var bounds=getBounds(canvas);
+    sizeToBounds(bounds,canvas);
     var middle={
       x:bounds.width/2,
       y:bounds.height/2
     }
-    var centerMargin=40;
-    var cols=20;
-    var gridSize=bounds.width/cols;
-    var mountains=[
-      [
-        {p:-4,s:3},
-        {p:-6,s:2},
-        {p:-7,s:1},
-        {p:-8,s:2},
-        {p:-10,s:4},
-        {p:4,s:3},
-        {p:6,s:2},
-        {p:7,s:1},
-        {p:8,s:2},
-        {p:13,s:4},
-      ],
-      [
-        {p:-3,s:2},
-        {p:1,s:1},
-        {p:4,s:1},
-        {p:5,s:2},
-      ],
-      [
-        {p:-2,s:1},
-        {p:1,s:1},
-        {p:4,s:1},
-        {p:5,s:2},
-      ]
-    ]
+    var textureMountains=createMountains();
+    var createdGL=createGL();
 
-    function drawLayer(layer,scale){
-      var grid=gridSize/scale;
-      for(var i=0;i<layer.length;i++){
-        var m=layer[i];
-        var w=m.s*grid;
-        var s=Math.sqrt((w*w)/2);
-        square45(
-          middle.x+(m.p*grid),
-          middle.y,
-          s,
-          ctx
-        );
+    function createGL(){
+      var vertexShader = document.getElementById('vs').textContent;
+      var fragmentShader = document.getElementById('fs').textContent;
+      var currentProgram;
+      var timeLocation;
+      var resolutionLocation;
+      var buffer;
+      var gl;
+      var startTime=new Date().getTime();
+      var time=0;
+
+      if(!init()) return false;
+      animate();
+
+      function init(){
+        try {
+          gl = canvas.getContext('experimental-webgl',{
+            premultipliedAlpha:false
+          });
+        } catch( error ) { }
+        if ( !gl ) {
+          return false;
+        }
+        buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array( [ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ] ), gl.STATIC_DRAW );
+        currentProgram = createProgram(vertexShader, fragmentShader);
+        if(currentProgram==null) return false;
+        timeLocation = gl.getUniformLocation(currentProgram, 'time');
+        resolutionLocation = gl.getUniformLocation(currentProgram, 'resolution');
+
+        // Create a texture.
+				var texture = gl.createTexture();
+				gl.bindTexture(gl.TEXTURE_2D, texture);
+			 
+				// Set the parameters so we can render any size image.
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+				// Upload the image into the texture.
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureMountains);
+
+        return true;
+      }
+
+      function createProgram( vertex, fragment ) {
+        var program = gl.createProgram();
+
+        var vs = createShader( vertex, gl.VERTEX_SHADER );
+        var fs = createShader( '#ifdef GL_ES\nprecision highp float;\n#endif\n\n' + fragment, gl.FRAGMENT_SHADER );
+        if ( vs == null || fs == null ) return null;
+
+        gl.attachShader( program, vs );
+        gl.attachShader( program, fs );
+
+        gl.deleteShader( vs );
+        gl.deleteShader( fs );
+
+        gl.linkProgram( program );
+
+        if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+          console.log( "ERROR:\n" +
+          "VALIDATE_STATUS: " + gl.getProgramParameter( program, gl.VALIDATE_STATUS ) + "\n" +
+          "ERROR: " + gl.getError() + "\n\n" +
+          "- Vertex Shader -\n" + vertex + "\n\n" +
+          "- Fragment Shader -\n" + fragment );
+          return null;
+        }
+        return program;
+      }
+
+      function createShader(src, type) {
+        var shader = gl.createShader( type );
+
+        gl.shaderSource( shader, src );
+        gl.compileShader( shader );
+
+        if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
+          console.log( ( type == gl.VERTEX_SHADER ? "VERTEX" : "FRAGMENT" ) + " SHADER:\n" + gl.getShaderInfoLog( shader ) );
+          return null;
+        }
+        return shader;
+      }
+      
+      function animate(){
+        render();
+        raf(animate);
+      }
+
+      function render(){
+        if ( !currentProgram ) return;
+
+        time=new Date().getTime()-startTime;
+
+        gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+
+        gl.useProgram(currentProgram);
+
+        gl.uniform1f(timeLocation, time/1000);
+        gl.uniform2f(resolutionLocation, bounds.width,bounds.height);
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+
+        var vertexPosition;
+        gl.vertexAttribPointer( vertexPosition, 2, gl.FLOAT, false, 0, 0 );
+        gl.enableVertexAttribArray(vertexPosition);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        gl.disableVertexAttribArray(vertexPosition);
+      }
+      return true;
+    }
+
+    function createMountains(){
+      var textureCanvas=createCanvas(bounds.width,bounds.height);
+      sizeToBounds(bounds,textureCanvas);
+      var ctx=getContext(textureCanvas);
+      var cols=60;
+      var gridSize=bounds.width/cols;
+      var mountains={
+        left:[
+          '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj',
+          '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
+          '..kkjj....kkkkjjjjkkkkjkjjjj',
+        ],
+        right:[
+          '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj',
+          '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
+          '..kkjj....kkkkjjjjkkkkjkjjjj',
+        ]
+      }
+      function drawLayer(layer,directionX,directionY){
+        ctx.beginPath();
+        ctx.moveTo(middle.x,middle.y);
+        var pos=0;
+        repeat(layer.length,function(i){
+          var dir=layer.charAt(i);
+          pos+=dir=='.'?0:(dir=='j'?-1:1);
+          ctx.lineTo(
+            middle.x+(i*gridSize)*directionX,
+            middle.y+(pos*gridSize)*directionY
+          )
+        });
+        ctx.closePath();
+        ctx.fill();
+      }
+      function drawLayers(i,color1,color2){
+        setFillStyle(color1,ctx);
+        drawLayer(mountains.left[i],-1,-1);
+        drawLayer(mountains.right[i],1,-1);
+        setFillStyle(color2,ctx);
+        drawLayer(mountains.left[i],-1,1);
+        drawLayer(mountains.right[i],1,1);
+      }
+      drawLayers(2,colors.pink,colors.green);
+      drawLayers(1,colors.purple,colors.pink);
+      drawLayers(0,colors.blackish,colors.purple);
+      return textureCanvas;
+    }
+  }());
+
+  ;(function(){
+    var canvas=querySelector('.Scene-stars');    
+    var ctx=getContext(canvas);
+    var bounds=getBounds(canvas);
+    sizeToBounds(bounds,canvas);
+    var stars=[];
+    function createStar(){
+      return {
+        x:random(bounds.width),
+        y:random(bounds.height),
+        s:0,
+        speed:0.01+random(0.035),
+        growing:true,
+        maxSize:1+(Math.pow(random(1),3)*10),
       }
     }
 
-    ctx.fillStyle='green';
-    drawLayer(mountains[2],1);
-    ctx.fillStyle='blue';
-    drawLayer(mountains[1],1);
-    ctx.fillStyle='black';
-    drawLayer(mountains[0],1);
-
+    ;(function draw(){
+      ctx.clearRect(0,0,bounds.width,bounds.height);
+      setFillStyle(colors.whiteish,ctx);
+      var newStars=[];
+      forEach(stars,function(star){
+        star.s+=star.speed*(star.growing?1:-1);
+        if(star.s>1) star.growing=false;
+        if(star.s<0){
+          return;
+        }else{
+          newStars.push(star);
+        }
+        drawStar(
+          star.x,
+          star.y,
+          1,
+          smooth(star.s)*star.maxSize,
+          ctx
+        );
+      });
+      if(random(1)<0.5) newStars.push(createStar());
+      stars=newStars;
+      raf(draw);
+    }());
 
   }());
 }());
+

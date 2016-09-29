@@ -1,4 +1,4 @@
-<html><head><title>oi</title><link rel="stylesheet" href="css/style.css"/></head><body><header class="Header"><div class="Scene"><div class="Scene-sky"></div><canvas class="Scene-stars"></canvas><canvas class="Scene-mountains"></canvas></div><h1 class="Title"><div class="Title-big">Lucas Bebber</div><div class="Title-small">Creative Developer</div></h1></header>oi<script id="vs" type="x-shader/vertex"> <script id="vs" type="x-shader/vertex">attribute vec3 position;
+<html><head><title>oi</title><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="css/style.css"/></head><body><header class="Header"><div class="Scene"><div class="Scene-sky"></div><canvas class="Scene-stars"></canvas><canvas class="Scene-mountains"></canvas></div><h1 class="Title"><div class="Title-big">Lucas Bebber</div><div class="Title-small">Creative Developer</div></h1></header><section><h2>About</h2><p>hello</p></section><script id="vs" type="x-shader/vertex">attribute vec3 position;
 
 void main() {
 
@@ -8,14 +8,21 @@ void main() {
 
 </script><script id="fs" type="x-shader/fragment">uniform float time;
 uniform vec2 resolution;
+uniform sampler2D image;
 
 void main( void ) {
 
-  vec2 position = - 1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
-  float red = abs( sin( position.x * position.y + time / 5.0 ) );
-  float green = abs( sin( position.x * position.y + time / 4.0 ) );
-  float blue = abs( sin( position.x * position.y + time / 3.0 ) );
-  gl_FragColor = vec4( red, green, blue, 1.0 );
+  vec2 position=gl_FragCoord.xy/resolution;
+  position=vec2(position.x,1.0-position.y);
+  float threshold=0.5;
+  if(position.y>threshold){
+    float dist=(position.y-threshold)/(1.0-threshold);
+    float p=dist*dist;
+    float timeP=10.0;
+    // position.x+=cos((dist*50.0)-(time*timeP))*0.02*p;
+    position.y+=cos((dist*(90.0))-(time*timeP))*0.09;//*p;
+  }
+  gl_FragColor = texture2D(image,position);
 
 }
 </script></script> <script src="js/main.js"></script></body></html>
