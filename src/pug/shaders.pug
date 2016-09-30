@@ -2,5 +2,5 @@ script(id='vs',type='x-shader/vertex').
   attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}
 
 script(id='fs',type='x-shader/fragment').
-  uniform float time;uniform vec2 resolution;uniform sampler2D image;void main(){vec2 position=gl_FragCoord.xy/resolution;position=vec2(position.x,1.0-position.y);if(position.y>0.5){float dist=(position.y-0.5)/0.5;float wave=(dist*9.0)-time;float p=(sin(wave*3.0-(time*3.0))+1.0)*0.5;wave-=p*0.25;wave=wave-floor(wave);wave=(floor(wave*4.0)+-0.2)/4.0;position.y+=wave*0.4*dist;}gl_FragColor=texture2D(image,position);}
+  uniform float time;uniform vec2 resolution;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/resolution;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*9.0)-time;float x=(sin(w*3.0-(time*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)+-0.2)/4.0;p.y+=w*0.4*dist;}gl_FragColor=texture2D(i,p);}
 
