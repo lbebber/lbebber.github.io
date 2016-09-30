@@ -4,8 +4,9 @@ li.Work
       | #{title}
       .Work-subtitle #{subtitle}
     p.Work-description #{description}
-    a.Work-link(href=link)
-      | #{label}
+    for item in links
+      a.Work-link(href=item.link)
+        | #{item.label}
   div.Work-image.js-Lazyload(data-image=image)
 
 

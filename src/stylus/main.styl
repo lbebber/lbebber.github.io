@@ -248,9 +248,11 @@ h3
 .Work-link
   display inline-block
   background pink
-  padding 25px
-  padding-top 15px
-  padding-bottom 15px
+  font-size 0.85em
+  padding 20px
+  padding-top 10px
+  padding-bottom 10px
+  margin-left 10px
   color whiteish
   font-family font-sans
   text-decoration none
@@ -274,6 +276,9 @@ h3
     left -50%
     // margin-right -2
     margin-left -85px
+  .Work-link
+    margin-right 10px
+    margin-left 0
 
 .underline
   text-decoration underline
@@ -298,15 +303,15 @@ h3
   // margin-bottom 0
 
 .Social
-  margin-top 7px
+  margin-top 14px
 
 .Social-link
   font-family font-sans
-  display block
   text-decoration none
+  color blackish
+  background linear-gradient(180deg,transparent 78%, pink 78%, pink 85%, transparent 85%)
   &:hover
     color blackish
-    text-decoration underline
     strong,.underline
       color pink
 @media(max-width:950px) and (min-width:769px)
@@ -320,7 +325,7 @@ h3
       padding-right 15px
 @media(max-width: 768px)
   .Nav-link
-    font-size 20px
+    font-size 16px
     margin-left 20px
     margin-right 20px
     &:first-child
