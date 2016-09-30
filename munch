@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+classes='
+  Title-separator
+  Title-Center-right
+  Title-Center-left
+  Title-Center
+  Title-big
+  Work-image
+  Work-text
+  Work-description
+  Work-subtitle
+  Work-title
+  Work-link
+  Works
+  Work
+  heading
+'
+html=$(cat public/index.html)
+css=$(cat public/css/style.css)
+incr=0
+for class in $classes
+do
+  html=$(echo $html | sed -e "s/$class/a$incr/g")
+  css=$(echo $css | sed -e "s/$class/a$incr/g")
+  ((incr++))
+done
+
+echo $css > public/css/style.css
+echo $html > public/index.html
