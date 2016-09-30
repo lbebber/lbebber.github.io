@@ -11,18 +11,20 @@ html
         canvas.Scene-stars
         canvas.Scene-mountains(stop-on-scroll='true')
       h1.Title
-        span.Title-big.Title-Center 
-          span.Title-Center-left Lucas 
-          span.Title-Center-right Bebber
-        span.Title-small.Title-Center
-          span.Title-Center-left Creative 
-          span.Title-Center-right Developer
-        img.Title-separator(src='img/separator-green.svg',aria-role='presentation')
-    section
+        span.Title-big.Title-Center(aria-label='Lucas Bebber') 
+          span.Title-Center-left(aria-hidden='true') Lucas 
+          span.Title-Center-right(aria-hidden='true') Bebber
+        span.Title-small.Title-Center(aria-label='Creative Developer')
+          span.Title-Center-left(aria-hidden='true') Creative 
+          span.Title-Center-right(aria-hidden='true') Developer
+        img.Title-separator(src='img/separator-green.svg',role='presentation')
+    main
       .container
         section
           h2 About
-          p I'm a blabla
+          p.heading Developer working on creating rich, interesting, and at the same time performant and usable experiences for the web.
+          p Part time illustrator.
+          p Currently working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>.
         section
           h2 Work
           ul.Works
@@ -35,9 +37,15 @@ html
             include work
             include work
             include work
-        section
+        footer
           h2 Contact
-          a(href='mailto:lucasbbebber@gmail.com') lucasbbebber at gmail dot com
+          .text-center
+            p You can drop me a line at
+            a.Email lucasbbebber at gmail dot com
+            .Social
+              a.Social-link(href='http://codepen.io/lbebber') codepen.io/lbebber
+              br
+              a.Social-link(href='http://twitter.com/lucasbebber') twitter.com/lucasbebber
 
     .Scene--bottom
       canvas.Scene-mountains.Scene-mountains--bottom

@@ -14,7 +14,22 @@ body
   padding 0
   color blackish
   font-family font-serif
-  font-size 24px
+  font-size 20px
+  line-height 1.4
+
+a
+  color pink
+
+p.heading
+  font-size 1.2em
+  font-style italic
+p
+  text-indent 1em
+  margin-top 0.5em
+  margin-bottom 0.5em
+
+.text-center
+  text-align center
 
 absolute-fill()
   position absolute
@@ -26,7 +41,7 @@ absolute-fill()
 .Header
   position relative
   height 66vh
-  margin-bottom 100px
+  margin-bottom 120px
 
 .Scene
   absolute-fill()
@@ -70,13 +85,13 @@ absolute-fill()
   margin-top -50px
   letter-spacing 0.2em
   font-size 45px
-  line-height 1.2
+  line-height 1.4
   font-weight bold
 
 .Title-big
   display block
   height 1em
-  margin-bottom 0.1em
+  margin-bottom 0.2em
 
 .Title-small
   display block
@@ -84,9 +99,10 @@ absolute-fill()
   color whiteish
   height 1em
   letter-spacing 0.2em
+  margin-bottom 15px
 
 .Title-separator
-  margin-top 10px
+  // margin-top 10px
 
 .Title-Center 
   position relative
@@ -102,10 +118,16 @@ absolute-fill()
 .Title-Center-right
   position absolute
   left 10px
+
+section
+  margin-bottom 100px
+
 h2
   text-align center
   font-family font-sans
   font-size 40px
+  margin 0
+  margin-bottom 40px
   &::after
     content ''
     background url('../img/separator.svg') no-repeat
@@ -113,6 +135,7 @@ h2
     width 67px
     height 17px
     margin 0 auto
+    margin-top 10px
 
 h3
   margin 0
@@ -130,10 +153,12 @@ h3
   list-style-type none
   margin 0
   padding 0
+  font-size 0
 
 .Work
   display block
-  margin-bottom 50px
+  margin-bottom 60px
+  font-size 0
 
 .Work-subtitle
   font-family serif
@@ -148,39 +173,100 @@ h3
   width 50%
   text-align right
   vertical-align middle
+  box-sizing border-box
+  padding-right 25px
+  font-size 20px
 
+.Work-description
+  text-indent 0
+  margin-top 1em
+  margin-bottom 1em
 .Work-image
+  border-radius 2px 
   position relative
   display inline-block
   vertical-align middle
-  border 5px solid white
+  border 6px solid white
   width 400px
   height 300px
-  background purple
+  background alpha(purple,0.1)
   background-size 30px 30px
-  margin-right -200px
-  margin-left 50px
+  margin-right -250px
+  margin-left 25px
   position relative
+  box-shadow 1px 4px 25px alpha(purple,0.15)
+
+.Work-link
+  display inline-block
+  background pink
+  padding 25px
+  padding-top 15px
+  padding-bottom 15px
+  color whiteish
+  font-family font-sans
+  text-decoration none
+  font-weight bold
+  box-shadow 1px 4px 20px alpha(purple,0.2)
+  transition background 100ms, color 100ms
+  // text-shadow 0 0 1px alpha(purple,0.6)
+
+  &:hover
+    background blackish
+    color pink
 
 .Work:nth-child(odd)
   .Work-text
     left 50%
     text-align left
+    padding-right 0
+    padding-left 25px
 
   .Work-image
     left -50%
-    margin-right 0
-    margin-left -100px
+    // margin-right -2
+    margin-left -85px
 
 
+.Email
+  text-align center
+  font-weight bold
+  font-family font-sans
+  color blackish
+  text-decoration none
+  background linear-gradient(180deg,transparent 82%, pink 82%, pink 91%, transparent 91%)
+  display inline-block
+  margin 0 auto
+  font-size 25px
+
+  &:hover
+    color pink
+    background linear-gradient(180deg,transparent 82%, blackish 82%, blackish 91%, transparent 91%)
+
+.Social
+  margin-top 10px
+
+.Social-link
+  font-family font-sans
 @media(max-width: 700px)
+  body
+    font-size 16px
+  section
+    margin-bottom 100px
   .Header
     height 75vh
+    margin-bottom 75px
   .container
     width 100%
     padding-left 10px
     padding-right 10px
     box-sizing border-box
+  .Title
+    font-size 40px
+  h2
+    font-size 35px
+    &::after
+      margin-top 6px
+      transform scale(0.8,0.8)
   .Title-Center
     width 100%
     text-align center
@@ -199,5 +285,38 @@ h3
     margin-bottom -100px
   .Scene--bottom
     height 100px
+    margin-top -100px
   .Scene-mountains--bottom
     margin-bottom 0
+  .Email
+    font-size 20px
+  .Work-text,.Work-image
+    display block
+    margin-right 0 !important
+    margin-left 0 !important
+    left auto !important
+    right auto !important
+    padding-left 0 !important
+    padding-right 0 !important
+  .Work
+    position relative
+    padding-top 340px
+    margin-bottom 100px
+  .Work-text
+    width 100%
+    text-align center !important
+    padding-left 0 !important
+    font-size 16px
+  .Work-image
+    position absolute
+    top 0
+    left 50% !important
+    transform translate(-50%,0)
+
+@media(max-width:450px)
+  .Work-image
+    width 320px
+    height 240px
+  .Work
+    padding-top 280px
+    margin-bottom 70px

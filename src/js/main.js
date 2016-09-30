@@ -7,10 +7,16 @@
     blackish : '#1B2947',
     green : '#54fad4',
   }
-  var dpi=window.devicePixelRatio;
+  var win=window;
+  var dpi=win.devicePixelRatio;
   var doc=document;
+  var body=doc.body;
+  var html=doc.documentElement;
   function getScroll(){
-    return window.pageYOffset || document.documentElement.scrollTop;
+    return win.pageYOffset || html.scrollTop;
+  }
+  function documentHeight(){
+    return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
   }
   function createCanvas(width,height){
     var canvas=doc.createElement('canvas');
@@ -174,7 +180,12 @@
         }
         
         function animate(){
-          render();
+          var top=canvas.getAttribute('stop-on-scroll');
+          var scroll=getScroll();
+          if((top && scroll<win.innerHeight) ||
+              (!top && scroll>documentHeight()-win.innerHeight-200)
+            )
+            render();
           raf(animate);
         }
 
@@ -188,7 +199,7 @@
           gl.useProgram(currentProgram);
 
           gl.uniform1f(timeLocation, time/1000);
-          var s=Math.max(0,1-(getScroll()/(window.innerHeight*0.5)));
+          var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
           gl.uniform1f(scrollLocation,canvas.getAttribute('stop-on-scroll')=='true'?s:1);
           gl.uniform2f(resolutionLocation, bounds.width*dpi,bounds.height*dpi);
 
@@ -207,22 +218,23 @@
         var textureCanvas=createCanvas(bounds.width,bounds.height);
         sizeToBounds(bounds,dpi,textureCanvas);
         var ctx=getContext(textureCanvas);
-        var factor=18;
+        var factor=20;
+        if(win.innerWidth<700) factor=18;
         var cols=Math.round(bounds.width/factor);
-        if(bounds.width>1200){
-          cols=55;
-        }
+        // if(bounds.width>1200){
+        //   cols=55;
+        // }
         var gridSize=bounds.width/cols;
         var mountains={
           left:[
-            '......kkkkjjjkkjjkjkkjjkkkkjjjjj',
+            '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj',
             '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
             '..kkjj....kkkkjjjjkkkkjkjjjj',
           ],
           right:[
-            '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj',
-            '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
-            '..kkjj....kkkkjjjjkkkkjkjjjj',
+            '......kkkkjjjkkjjjkkkjjkkkkkjjjjjj',
+            '....kkkjjjkkkkjjjkkjj.......kkkkkjjjjjj',
+            '..kkjj..kkkkjjkkjjjjkkkkjkjjjj',
           ]
         }
         function drawLayer(layer,directionX,directionY){
@@ -284,27 +296,29 @@
     }
 
     ;(function draw(){
-      ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
-      setFillStyle(colors.whiteish,ctx);
-      var newStars=[];
-      forEach(stars,function(star){
-        star.s+=star.speed*(star.growing?1:-1);
-        if(star.s>1) star.growing=false;
-        if(star.s<0){
-          return;
-        }else{
-          newStars.push(star);
-        }
-        drawStar(
-          star.x*dpi,
-          star.y*dpi,
-          1,
-          smooth(star.s)*star.maxSize*dpi,
-          ctx
-        );
-      });
-      if(random(1)<0.3) newStars.push(createStar());
-      stars=newStars;
+      if(getScroll()<win.innerHeight){
+        ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
+        setFillStyle(colors.whiteish,ctx);
+        var newStars=[];
+        forEach(stars,function(star){
+          star.s+=star.speed*(star.growing?1:-1);
+          if(star.s>1) star.growing=false;
+          if(star.s<0){
+            return;
+          }else{
+            newStars.push(star);
+          }
+          drawStar(
+            star.x*dpi,
+            star.y*dpi,
+            1,
+            smooth(star.s)*star.maxSize*dpi,
+            ctx
+          );
+        });
+        if(random(1)<0.3) newStars.push(createStar());
+        stars=newStars;
+      }
       raf(draw);
     }());
 
@@ -315,5 +329,8 @@
       var bounds=getBounds(el);
       el.style.height=bounds.height+'px';
     });
+  }());
+  (function(){
+    setAttribute('href','mailto:lucasbbebber@gmail.com',querySelector('.Email'));
   }());
 }());
