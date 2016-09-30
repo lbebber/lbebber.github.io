@@ -13,6 +13,33 @@ script(id='fs',type='x-shader/fragment').
   uniform vec2 resolution;
   uniform sampler2D image;
 
+  float round(float x){
+    return floor(x+0.5);
+  }
+
+  float sawtoothWave(float dist,float freq,float timeP){
+    float wave=(dist*freq)-(time*timeP);
+    float p=(sin(wave*3.0-(time*3.0))+1.0)*0.5;
+    wave-=p*0.25;
+    return wave-floor(wave);
+  }
+  float sawtoothWaveTest(float dist,float freq,float timeP){
+    return 0.0;
+    // float wave=(dist*freq)-(time*timeP);
+    // float p=(sin(wave)+1.0)*0.5;
+    // wave+=1.0*p;
+    // // return wave;
+    // return wave-floor(wave);
+  }
+  float triangleWave(float dist,float freq,float timeP){
+    float wave=(dist*freq)-(time*timeP);
+    wave=wave-floor(wave);
+    wave*=2.0;
+    return wave>1.0?1.0-(wave-1.0):wave;
+  }
+  float stepWave(float wave,float steps,float offset){
+    return (floor(wave*steps)+offset)/steps;
+  }
   void main( void ) {
 
     vec2 position=gl_FragCoord.xy/resolution;
@@ -21,11 +48,22 @@ script(id='fs',type='x-shader/fragment').
     if(position.y>threshold){
       float dist=(position.y-threshold)/(1.0-threshold);
       float p=dist*dist;
-      float timeP=10.0;
-      // position.x+=cos((dist*50.0)-(time*timeP))*0.02*p;
-      position.y+=cos((dist*(90.0))-(time*timeP))*0.09;//*p;
+      float timeP=1.0;
+      float maxFreq=9.0;//-(((cos(position.x*20.0+(time*0.5))*0.5)+0.5)*1.5);
+      float freqDelta=maxFreq*0.00;
+      float wave=sawtoothWave(dist,maxFreq-(freqDelta*dist),timeP);
+      wave=stepWave(wave,4.0,-0.20);
+      float wave2=sawtoothWave(dist,(maxFreq-(freqDelta*dist))*0.5,timeP);
+      wave2=stepWave(wave2,8.0,-0.0);
+      // wave2+=0.5;
+      position.y+=wave*0.4*dist;
+      // position.y+=sin(dist*18.0+time*2.0)*0.02*pow(dist,1.0);
+      // position.x+=wave2*0.03*dist;
     }
     gl_FragColor = texture2D(image,position);
+    // gl_FragColor = vec4(position,0.0,1.0);
+    // float dist2=(position.y-threshold)/(1.0-threshold);
+    // gl_FragColor = vec4(sawtoothWaveTest(dist2,13.0,1.4),0.0,0.0,1.0);
 
   }
 

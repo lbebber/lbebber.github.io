@@ -5,10 +5,16 @@ purple = #75517D
 blackish = #1B2947
 green = #54fad4
 
+font-sans='Avenir Next',Futura,Montserrat,sans-serif;
+font-serif='Georgia',serif;
+
 body
   background whiteish
   margin 0
   padding 0
+  color blackish
+  font-family font-serif
+  font-size 24px
 
 absolute-fill()
   position absolute
@@ -20,9 +26,17 @@ absolute-fill()
 .Header
   position relative
   height 66vh
+  margin-bottom 100px
 
 .Scene
   absolute-fill()
+
+.Scene--bottom
+  position relative
+  width 100%
+  transform rotate(180deg)
+  height 150px
+  overflow hidden
 
 .Scene-sky
   absolute-fill()
@@ -39,4 +53,58 @@ absolute-fill()
   left 0
   width 100%
   height 300px
-  transform translate(0,50%)
+  margin-bottom -150px
+
+.Scene-mountains--bottom
+  margin-bottom 0
+
+.Title
+  font-family font-sans 
+  color green
+  position absolute
+  top 50%
+  width 100%
+  text-align center
+  text-transform uppercase
+  transform translate(0,-50%)
+  letter-spacing 0.2em
+  font-size 40px
+  line-height 1.1
+
+.Title-big
+  display block
+  height 1em
+
+.Title-small
+  display block
+  font-size 0.55em
+  color whiteish
+  height 0.55em
+
+.Center 
+  position relative
+  width 0
+  margin 0 auto
+
+.Center-left
+  position absolute
+  right 10px
+
+.Center-right
+  position absolute
+  left 10px
+h2
+  text-align center
+  font-family font-sans
+  font-size 40px
+  &::after
+    content ''
+    background url('../img/separator.svg') no-repeat
+    display block
+    width 67px
+    height 17px
+    margin 0 auto
+
+.container
+  width 700px
+  margin 0 auto
