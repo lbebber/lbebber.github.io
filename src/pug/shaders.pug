@@ -1,47 +1,6 @@
 script(id='vs',type='x-shader/vertex').
-  attribute vec3 position;
-
-  void main() {
-
-    gl_Position = vec4( position, 1.0 );
-
-  }
-
+  attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}
 
 script(id='fs',type='x-shader/fragment').
-  uniform float time;
-  uniform vec2 resolution;
-  uniform sampler2D image;
-
-  float round(float x){
-    return floor(x+0.5);
-  }
-
-  float sawtoothWave(float dist,float freq,float timeP){
-    float wave=(dist*freq)-(time*timeP);
-    float p=(sin(wave*3.0-(time*3.0))+1.0)*0.5;
-    wave-=p*0.25;
-    return wave-floor(wave);
-  }
-  float stepWave(float wave,float steps,float offset){
-    return (floor(wave*steps)+offset)/steps;
-  }
-  void main( void ) {
-    vec2 position=gl_FragCoord.xy/resolution;
-    position=vec2(position.x,1.0-position.y);
-    float threshold=0.5;
-    if(position.y>threshold){
-      float dist=(position.y-threshold)/(1.0-threshold);
-      float p=dist*dist;
-      float timeP=1.0;
-      float maxFreq=9.0;
-      float freqDelta=maxFreq*0.00;
-      float wave=sawtoothWave(dist,maxFreq-(freqDelta*dist),timeP);
-      wave=stepWave(wave,4.0,-0.20);
-      position.y+=wave*0.4*dist;
-    }
-    gl_FragColor = texture2D(image,position);
-  }
-
-</script> 
+  uniform float time;uniform vec2 resolution;uniform sampler2D image;void main(){vec2 position=gl_FragCoord.xy/resolution;position=vec2(position.x,1.0-position.y);if(position.y>0.5){float dist=(position.y-0.5)/0.5;float wave=(dist*9.0)-time;float p=(sin(wave*3.0-(time*3.0))+1.0)*0.5;wave-=p*0.25;wave=wave-floor(wave);wave=(floor(wave*4.0)+-0.2)/4.0;position.y+=wave*0.4*dist;}gl_FragColor=texture2D(image,position);}
 
