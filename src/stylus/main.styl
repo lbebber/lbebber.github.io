@@ -15,7 +15,7 @@ body
   color blackish
   font-family font-serif
   font-size 20px
-  line-height 1.4
+  line-height 1.6
 
 a
   color pink
@@ -120,7 +120,24 @@ absolute-fill()
   left 10px
 
 section
-  margin-bottom 100px
+  padding-bottom 70px
+  margin-bottom 70px
+  position relative
+  &::after
+    content ''
+    display block
+    width 300px
+    height 1px
+    position absolute
+    left 50%
+    bottom 0
+    margin-left - ( @width / 2 )
+    background purple
+    opacity 0.15
+
+
+footer
+  margin-bottom 10px
 
 h2
   text-align center
@@ -159,6 +176,8 @@ h3
   display block
   margin-bottom 60px
   font-size 0
+  &:last-child
+    margin-bottom 0
 
 .Work-subtitle
   font-family serif
@@ -226,6 +245,8 @@ h3
     // margin-right -2
     margin-left -85px
 
+.underline
+  text-decoration underline
 
 .Email
   text-align center
@@ -237,21 +258,36 @@ h3
   display inline-block
   margin 0 auto
   font-size 25px
+  margin-bottom 20px
 
   &:hover
     color pink
-    background linear-gradient(180deg,transparent 82%, blackish 82%, blackish 91%, transparent 91%)
+
+.Contact-heading
+  margin-bottom 0em
 
 .Social
-  margin-top 10px
+  margin-top 20px
 
 .Social-link
   font-family font-sans
-@media(max-width: 700px)
+  display block
+  margin-bottom 5px
+  text-decoration none
+@media(max-width:950px) and (min-width:769px)
+  .Work-image
+    width 300px
+    height 225px
+    margin-left 25px !important
+
+  .Work:nth-child(even)
+    .Work-text
+      padding-right 15px
+@media(max-width: 768px)
   body
     font-size 16px
   section
-    margin-bottom 100px
+    margin-bottom 70px
   .Header
     height 75vh
     margin-bottom 75px

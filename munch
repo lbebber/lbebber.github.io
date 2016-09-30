@@ -6,15 +6,21 @@ classes='
   Title-Center-left
   Title-Center
   Title-big
+  Title-small
   Work-image
   Work-text
   Work-description
   Work-subtitle
   Work-title
   Work-link
-  Works
-  Work
   heading
+  container
+  Social-link
+  Scene--bottom
+  Scene-mountains--bottom
+  text-center
+  Scene-sky
+  Contact-heading
 '
 html=$(cat public/index.html)
 css=$(cat public/css/style.css)

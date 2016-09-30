@@ -12,6 +12,11 @@
   var doc=document;
   var body=doc.body;
   var html=doc.documentElement;
+  var shaders={
+    vert:'attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}',
+    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*9.0)-t;float x=(sin(w*3.0-(t*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)+-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}',
+  };
+
   function getScroll(){
     return win.pageYOffset || html.scrollTop;
   }
@@ -73,7 +78,7 @@
     setAttribute('height',bounds.height*dpi,element);
   }
 
-  (function(){
+  function mountains(){
     var canvases=querySelectorAll('.Scene-mountains');
     forEach(canvases,function(canvas){
       var bounds=getBounds(canvas);
@@ -86,8 +91,8 @@
       var createdGL=createGL();
 
       function createGL(){
-        var vertexShader = doc.getElementById('vs').textContent;
-        var fragmentShader = doc.getElementById('fs').textContent;
+        var vertexShader = shaders.vert;
+        var fragmentShader = shaders.frag;
         var currentProgram;
         var timeLocation;
         var resolutionLocation;
@@ -227,14 +232,14 @@
         var gridSize=bounds.width/cols;
         var mountains={
           left:[
-            '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj',
+            '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj..kkjj',
             '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
-            '..kkjj....kkkkjjjjkkkkjkjjjj',
+            '...kkjj...kkkkjjjjkkkkjkjjjj.....kkkkjjkkkkjjjjjj',
           ],
           right:[
-            '......kkkkjjjkkjjjkkkjjkkkkkjjjjjj',
-            '....kkkjjjkkkkjjjkkjj.......kkkkkjjjjjj',
-            '..kkjj..kkkkjjkkjjjjkkkkjkjjjj',
+            '......kkkkjjjkkjjjkkkjjkkkkkjjjjjkjj..kkkjjj',
+            '....kkkjjjkkkkjjjkkjj.......kkkkjjjjj',
+            '...kkjj.kkkkjjkkjjjjkkkkjkjjjj...kkkkjkjjjj',
           ]
         }
         function drawLayer(layer,directionX,directionY){
@@ -276,7 +281,9 @@
         return textureCanvas;
       }
     });
-  }());
+  };
+
+  mountains();
 
   ;(function(){
     var canvas=querySelector('.Scene-stars');    

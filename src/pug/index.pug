@@ -28,26 +28,33 @@ html
         section
           h2 Work
           ul.Works
-            include work
-            include work
-            include work
-            include work
-            include work
-            include work
-            include work
+            - var title="Teste"
+            - var subtitle='Subtitulo'
+            - var description='Descricao'
+            - var link='http://yahoo.com'
+            - var label='See the project'
             include work
             include work
         footer
           h2 Contact
           .text-center
-            p You can drop me a line at
+            .Contact-heading You can drop me a line at
             a.Email lucasbbebber at gmail dot com
             .Social
-              a.Social-link(href='http://codepen.io/lbebber') codepen.io/lbebber
-              br
-              a.Social-link(href='http://twitter.com/lucasbebber') twitter.com/lucasbebber
+              .Contact-heading You can find me at
+              a.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<span class='underline'>lbebber</span>
+              a.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<span class='underline'>lucasbebber</span>
+              a.Social-link(href='http://dribbble.com/lucasbebber') <strong>dribbble</strong>.com/<span class='underline'>lbebber</span>
 
     .Scene--bottom
       canvas.Scene-mountains.Scene-mountains--bottom
-    include shaders
-    script(src='js/main.js')
+    script.
+      function lazyLoad(s) {
+        var d = window.document,
+            b = d.body,
+            e = d.createElement("script");
+        e.async = true;
+        e.src = s;
+        b.appendChild(e);
+      }
+      lazyLoad('js/main.js')
