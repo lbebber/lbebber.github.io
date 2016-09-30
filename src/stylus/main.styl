@@ -5,7 +5,7 @@ purple = #75517D
 blackish = #1B2947
 green = #54fad4
 
-font-sans='Avenir Next',Futura,Montserrat,'Helvetica Neue',Helvetica,Roboto,sans-serif;
+font-sans='Avenir Next',Futura,Helvetica,sans-serif;
 font-serif='Georgia',serif;
 
 body
@@ -23,7 +23,6 @@ a
 p.heading
   font-size 1.2em
 p
-  text-indent 1em
   margin-top 0.5em
   margin-bottom 0.5em
 
@@ -124,9 +123,6 @@ absolute-fill()
   letter-spacing 0.2em
   margin-bottom 15px
 
-.Title-separator
-  // margin-top 10px
-
 .Title-Center 
   position relative
   width 0
@@ -158,10 +154,6 @@ section
     background purple
     opacity 0.15
 
-
-footer
-  margin-bottom 10px
-
 h2
   text-align center
   font-family font-sans
@@ -175,8 +167,7 @@ h2
     display block
     width 67px
     height 17px
-    margin 0 auto
-    margin-top 18px
+    margin 18px auto 0 auto
 
 h3
   margin 0
@@ -188,8 +179,6 @@ h3
 .container
   width 700px
   margin 0 auto
-  position relative
-
 
 .Works
   list-style-type none
@@ -202,8 +191,8 @@ h3
   display block
   margin-bottom 60px
   font-size 0
-  &:last-child
-    margin-bottom 30px
+  // &:last-child
+  //   margin-bottom 30px
 
 .Work-subtitle
   font-family serif
@@ -223,7 +212,6 @@ h3
   font-size 20px
 
 .Work-description
-  text-indent 0
   margin-top 1em
   margin-bottom 1em
 
@@ -236,7 +224,6 @@ h3
   width 400px
   height 300px
   background alpha(purple,0.1)
-  background-size 30px 30px
   margin-right -250px
   margin-left 25px
   position relative
@@ -244,22 +231,18 @@ h3
 
   img
     width 100%
-    height 100%
+
 .Work-link
   display inline-block
   background pink
   font-size 0.85em
-  padding 20px
-  padding-top 10px
-  padding-bottom 10px
+  padding 10px 20px
   margin-left 10px
   color whiteish
   font-family font-sans
   text-decoration none
   font-weight bold
   box-shadow 1px 4px 20px alpha(purple,0.2)
-  transition background 100ms, color 100ms
-  // text-shadow 0 0 1px alpha(purple,0.6)
 
   &:hover
     background blackish
@@ -271,45 +254,34 @@ h3
     text-align left
     padding-right 0
     padding-left 25px
-
   .Work-image
     left -50%
-    // margin-right -2
     margin-left -85px
   .Work-link
     margin-right 10px
     margin-left 0
 
-.underline
-  text-decoration underline
-
 .Email
   text-align center
-  font-weight bold
-  font-family font-sans
-  color blackish
   text-decoration none
-  background linear-gradient(180deg,transparent 78%, pink 78%, pink 85%, transparent 85%)
   display inline-block
-  margin 0 auto
-  margin-top 11px
-  margin-bottom 25px
+  margin 11px auto 25px auto
   font-size 30px
 
   &:hover
     color pink
 
-.Contact-heading
-  // margin-bottom 0
-
 .Social
   margin-top 14px
 
-.Social-link
+.Footer-link
+  font-weight bold
   font-family font-sans
   text-decoration none
   color blackish
   background linear-gradient(180deg,transparent 78%, pink 78%, pink 85%, transparent 85%)
+
+.Social-link
   &:hover
     color blackish
     strong,.underline
@@ -390,6 +362,8 @@ h3
     position relative
     padding-top 340px
     margin-bottom 100px
+    padding-top 280px
+    margin-bottom 70px
   .Work-text
     width 100%
     text-align center !important
@@ -400,17 +374,10 @@ h3
     top 0
     left 50% !important
     transform translate(-50%,0)
+    width 300px
+    height 225px
   .Social
     margin-top 14px
-  
   .Social-link
     margin-bottom 10px
     font-size 18px
-
-@media(max-width:450px)
-  .Work-image
-    width 300px
-    height 225px
-  .Work
-    padding-top 280px
-    margin-bottom 70px

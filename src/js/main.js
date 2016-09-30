@@ -387,6 +387,7 @@
     forEach(querySelectorAll('.js-Lazyload'),function(el){
       var img=document.createElement('img');
       setAttribute('src',el.getAttribute('data-image'),img);
+      setAttribute('role','presentation',img);
       el.appendChild(img);
     });
   }())

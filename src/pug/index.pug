@@ -21,7 +21,7 @@ html
         span.Title-small.Title-Center(aria-label='Creative Developer')
           span.Title-Center-left(aria-hidden='true') Creative 
           span.Title-Center-right(aria-hidden='true') Developer
-        img.Title-separator(src='img/separator-green.svg',role='presentation')
+        div.Title-separator.js-Lazyload(role='presentation',data-image='img/separator-green.svg')
     main
       .container
         section
@@ -81,28 +81,18 @@ html
 
             include work
 
-            - var title='Garden Estúdio'
-            - var subtitle='Illustration/Development'
-            - var description='2013 portfolio website for Garden Estúdio.'
-            - var image='img/garden.png'
-            -
-              var links=[
-                {label:'Visit website',link:'http://gardenestudio.com.br/'}
-              ]
-
-            include work
         footer
           h2#contact Contact
           .text-center
             .Contact-heading You can drop me a line at
-            a.Email lucasbbebber at gmail dot com
+            a.Email.Footer-link lucasbbebber at gmail dot com
             .Contact-heading You can find me on
             .Social
-              a.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<strong>lbebber</strong>
+              a.Footer-link.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<strong>lbebber</strong>
               br
-              a.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<strong>lucasbebber</strong>
+              a.Footer-link.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<strong>lucasbebber</strong>
               br
-              a.Social-link(href='http://dribbble.com/lucasbebber') <strong>dribbble</strong>.com/<strong>lbebber</strong>
+              a.Footer-link.Social-link(href='http://dribbble.com/lucasbebber') <strong>dribbble</strong>.com/<strong>lbebber</strong>
               br
 
     .Scene--bottom
