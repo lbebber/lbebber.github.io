@@ -8,8 +8,12 @@
     green : '#54fad4',
   }
   var dpi=window.devicePixelRatio;
+  var doc=document;
+  function getScroll(){
+    return window.pageYOffset || document.documentElement.scrollTop;
+  }
   function createCanvas(width,height){
-    var canvas=document.createElement('canvas');
+    var canvas=doc.createElement('canvas');
     setAttribute('width',width*dpi,canvas);
     setAttribute('height',height*dpi,canvas);
     return canvas;
@@ -23,10 +27,10 @@
     ctx.restore();
   }
   function querySelector(selector){
-    return document.querySelector(selector);
+    return doc.querySelector(selector);
   }
   function querySelectorAll(selector){
-    var nodes=document.querySelectorAll(selector);
+    var nodes=doc.querySelectorAll(selector);
     return [].slice.call(nodes);
   }
   function getContext(canvas){
@@ -76,11 +80,12 @@
       var createdGL=createGL();
 
       function createGL(){
-        var vertexShader = document.getElementById('vs').textContent;
-        var fragmentShader = document.getElementById('fs').textContent;
+        var vertexShader = doc.getElementById('vs').textContent;
+        var fragmentShader = doc.getElementById('fs').textContent;
         var currentProgram;
         var timeLocation;
         var resolutionLocation;
+        var scrollLocation;
         var buffer;
         var gl;
         var startTime=new Date().getTime();
@@ -103,21 +108,29 @@
           gl.bufferData(gl.ARRAY_BUFFER, new Float32Array( [ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ] ), gl.STATIC_DRAW );
           currentProgram = createProgram(vertexShader, fragmentShader);
           if(currentProgram==null) return false;
-          timeLocation = gl.getUniformLocation(currentProgram, 'time');
-          resolutionLocation = gl.getUniformLocation(currentProgram, 'resolution');
+          function getUniformLocation(){
+            return gl.getUniformLocation.apply(gl,arguments);
+          }
+          timeLocation = getUniformLocation(currentProgram, 't');
+          resolutionLocation = getUniformLocation(currentProgram, 'r');
+          scrollLocation=getUniformLocation(currentProgram,'s');
+
+          function texParameteri(){
+            return gl.texParameteri.apply(gl,arguments);
+          }
+          var gl_TEXTURE_2D=gl.TEXTURE_2D;
 
           // Create a texture.
           var texture = gl.createTexture();
-          gl.bindTexture(gl.TEXTURE_2D, texture);
+          gl.bindTexture(gl_TEXTURE_2D, texture);
          
           // Set the parameters so we can render any size image.
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+          texParameteri(gl_TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+          texParameteri(gl_TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          texParameteri(gl_TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+          texParameteri(gl_TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
           // Upload the image into the texture.
-          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureMountains);
-
+          gl.texImage2D(gl_TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, textureMountains);
           return true;
         }
 
@@ -137,11 +150,11 @@
           gl.linkProgram( program );
 
           if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
-            console.log( "ERROR:\n" +
-            "VALIDATE_STATUS: " + gl.getProgramParameter( program, gl.VALIDATE_STATUS ) + "\n" +
-            "ERROR: " + gl.getError() + "\n\n" +
-            "- Vertex Shader -\n" + vertex + "\n\n" +
-            "- Fragment Shader -\n" + fragment );
+            // console.log( "ERROR:\n" +
+            // "VALIDATE_STATUS: " + gl.getProgramParameter( program, gl.VALIDATE_STATUS ) + "\n" +
+            // "ERROR: " + gl.getError() + "\n\n" +
+            // "- Vertex Shader -\n" + vertex + "\n\n" +
+            // "- Fragment Shader -\n" + fragment );
             return null;
           }
           return program;
@@ -154,7 +167,7 @@
           gl.compileShader( shader );
 
           if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
-            console.log( ( type == gl.VERTEX_SHADER ? "VERTEX" : "FRAGMENT" ) + " SHADER:\n" + gl.getShaderInfoLog( shader ) );
+            // console.log( ( type == gl.VERTEX_SHADER ? "VERTEX" : "FRAGMENT" ) + " SHADER:\n" + gl.getShaderInfoLog( shader ) );
             return null;
           }
           return shader;
@@ -175,6 +188,8 @@
           gl.useProgram(currentProgram);
 
           gl.uniform1f(timeLocation, time/1000);
+          var s=Math.max(0,1-(getScroll()/(window.innerHeight*0.5)));
+          gl.uniform1f(scrollLocation,canvas.getAttribute('stop-on-scroll')=='true'?s:1);
           gl.uniform2f(resolutionLocation, bounds.width*dpi,bounds.height*dpi);
 
           gl.bindBuffer( gl.ARRAY_BUFFER, buffer );

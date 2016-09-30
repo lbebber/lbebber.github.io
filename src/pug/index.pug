@@ -9,116 +9,35 @@ html
       .Scene
         .Scene-sky
         canvas.Scene-stars
-        canvas.Scene-mountains
+        canvas.Scene-mountains(stop-on-scroll='true')
       h1.Title
-        span.Title-big.Center 
-          span.Center-left Lucas
-          span.Center-right Bebber
-        span.Title-small.Center
-          span.Center-left Creative
-          span.Center-right Developer
-        img(src='img/separator.svg')
+        span.Title-big.Title-Center 
+          span.Title-Center-left Lucas 
+          span.Title-Center-right Bebber
+        span.Title-small.Title-Center
+          span.Title-Center-left Creative 
+          span.Title-Center-right Developer
+        img.Title-separator(src='img/separator-green.svg',aria-role='presentation')
     section
       .container
-        h2 About
-        p I'm a blabla
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
-        br
+        section
+          h2 About
+          p I'm a blabla
+        section
+          h2 Work
+          ul.Works
+            include work
+            include work
+            include work
+            include work
+            include work
+            include work
+            include work
+            include work
+            include work
+        section
+          h2 Contact
+          a(href='mailto:lucasbbebber@gmail.com') lucasbbebber at gmail dot com
 
     .Scene--bottom
       canvas.Scene-mountains.Scene-mountains--bottom

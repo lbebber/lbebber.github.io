@@ -5,7 +5,7 @@ purple = #75517D
 blackish = #1B2947
 green = #54fad4
 
-font-sans='Avenir Next',Futura,Montserrat,sans-serif;
+font-sans='Avenir Next',Futura,Montserrat,'Helvetica Neue',Helvetica,Roboto,sans-serif;
 font-serif='Georgia',serif;
 
 body
@@ -55,6 +55,7 @@ absolute-fill()
   height 300px
   margin-bottom -150px
 
+
 .Scene-mountains--bottom
   margin-bottom 0
 
@@ -66,31 +67,39 @@ absolute-fill()
   width 100%
   text-align center
   text-transform uppercase
-  transform translate(0,-50%)
+  margin-top -50px
   letter-spacing 0.2em
-  font-size 40px
-  line-height 1.1
+  font-size 45px
+  line-height 1.2
+  font-weight bold
 
 .Title-big
   display block
   height 1em
+  margin-bottom 0.1em
 
 .Title-small
   display block
-  font-size 0.55em
+  font-size 0.6em
   color whiteish
-  height 0.55em
+  height 1em
+  letter-spacing 0.2em
 
-.Center 
+.Title-separator
+  margin-top 10px
+
+.Title-Center 
   position relative
   width 0
-  margin 0 auto
+  margin-left auto
+  margin-right auto
 
-.Center-left
+.Title-Center-left
   position absolute
   right 10px
+  margin-right -0.2em
 
-.Center-right
+.Title-Center-right
   position absolute
   left 10px
 h2
@@ -105,6 +114,90 @@ h2
     height 17px
     margin 0 auto
 
+h3
+  margin 0
+  font-family font-sans
+  font-weight bold
+  font-size 30px
+  line-height 1
+
 .container
   width 700px
   margin 0 auto
+
+
+.Works
+  list-style-type none
+  margin 0
+  padding 0
+
+.Work
+  display block
+  margin-bottom 50px
+
+.Work-subtitle
+  font-family serif
+  font-style italic
+  font-size 20px
+  color purple
+  font-weight normal
+
+.Work-text
+  position relative
+  display inline-block
+  width 50%
+  text-align right
+  vertical-align middle
+
+.Work-image
+  position relative
+  display inline-block
+  vertical-align middle
+  border 5px solid white
+  width 400px
+  height 300px
+  background purple
+  background-size 30px 30px
+  margin-right -200px
+  margin-left 50px
+  position relative
+
+.Work:nth-child(odd)
+  .Work-text
+    left 50%
+    text-align left
+
+  .Work-image
+    left -50%
+    margin-right 0
+    margin-left -100px
+
+
+@media(max-width: 700px)
+  .Header
+    height 75vh
+  .container
+    width 100%
+    padding-left 10px
+    padding-right 10px
+    box-sizing border-box
+  .Title-Center
+    width 100%
+    text-align center
+  .Title-Center-left,.Title-Center-right
+    margin-right 0
+    position static
+  .Title
+    letter-spacing 0
+    text-transform none
+  .Title-small
+    letter-spacing 0
+    text-transform none
+    font-size 0.7em
+  .Scene-mountains
+    height 200px
+    margin-bottom -100px
+  .Scene--bottom
+    height 100px
+  .Scene-mountains--bottom
+    margin-bottom 0
