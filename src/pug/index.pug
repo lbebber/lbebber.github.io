@@ -1,15 +1,19 @@
 html
   head
-    title oi
+    title Lucas Bebber
     meta(name='viewport',content='width=device-width, initial-scale=1')
     link(rel='stylesheet',href='css/style.css')
   body
 
-    header.Header.js-HasVH
+    header.Header.js-HasVH(data-vh='0.75')
+      nav
+        a.Nav-link(href='#about') About
+        a.Nav-link(href='#work') Work
+        a.Nav-link(href='#contact') Contact
       .Scene
         .Scene-sky
         canvas.Scene-stars
-        canvas.Scene-mountains(stop-on-scroll='true')
+        canvas.Scene-mountains(data-stop-on-scroll='true')
       h1.Title
         span.Title-big.Title-Center(aria-label='Lucas Bebber') 
           span.Title-Center-left(aria-hidden='true') Lucas 
@@ -23,28 +27,52 @@ html
         section
           h2 About
           p.heading Developer working on creating rich, interesting, and at the same time performant and usable experiences for the web.
-          p Part time illustrator.
-          p Currently working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>.
+          p Focusing on user interfaces, performance, and animation. Also works with back-end development, design, and illustration.
+          p Currently working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>. Based in Rio Grande do Sul - Brazil.
         section
           h2 Work
           ul.Works
-            - var title="Teste"
-            - var subtitle='Subtitulo'
-            - var description='Descricao'
+            - var title='Rain Effect'
+            - var subtitle='Experiment/Codrops'
+            - var description='Relatively lightweight realistic raindrops-on-a-window effect, with WebGL.'
             - var link='http://yahoo.com'
             - var label='See the project'
+            - var image='img/rain.jpg'
             include work
+
+            - var title='Heat Haze Effect'
+            - var subtitle='Experiment/Codrops'
+            - var description='Relatively lightweight realistic heat haze effect, with WebGL.'
+            - var link='http://tympanus.net/codrops/2016/05/03/animated-heat-distortion-effects-webgl/'
+            - var label='See the project'
+            - var image='img/haze.jpg'
+            include work
+
+            - var title='Storytelling Map'
+            - var subtitle='Storytelling/Codrops'
+            - var description='Animated map for interactive storytelling.'
+            - var link='http://tympanus.net/codrops/2016/05/03/animated-heat-distortion-effects-webgl/'
+            - var label='See the project'
+            - var image='img/map.jpg'
+            include work
+
+            - var title='Elastic Progress'
+            - var subtitle='Interface Animation/Codrops'
+            - var description='SVG animation for a playful download button.'
+            - var link='http://tympanus.net/codrops/2015/09/23/elastic-progress/'
+            - var label='See the project'
+            - var image='img/elastic.jpg'
             include work
         footer
           h2 Contact
           .text-center
             .Contact-heading You can drop me a line at
             a.Email lucasbbebber at gmail dot com
+            .Contact-heading You can find me at
             .Social
-              .Contact-heading You can find me at
-              a.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<span class='underline'>lbebber</span>
-              a.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<span class='underline'>lucasbebber</span>
-              a.Social-link(href='http://dribbble.com/lucasbebber') <strong>dribbble</strong>.com/<span class='underline'>lbebber</span>
+              a.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<strong>lbebber</strong>
+              a.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<strong>lucasbebber</strong>
+              a.Social-link(href='http://dribbble.com/lucasbebber') <strong>dribbble</strong>.com/<strong>lbebber</strong>
 
     .Scene--bottom
       canvas.Scene-mountains.Scene-mountains--bottom

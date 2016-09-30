@@ -79,6 +79,7 @@
   }
 
   function mountains(){
+    var stopAnim=false;
     var canvases=querySelectorAll('.Scene-mountains');
     forEach(canvases,function(canvas){
       var bounds=getBounds(canvas);
@@ -185,13 +186,14 @@
         }
         
         function animate(){
-          var top=canvas.getAttribute('stop-on-scroll');
+          var top=canvas.getAttribute('data-stop-on-scroll')=='true';
           var scroll=getScroll();
           if((top && scroll<win.innerHeight) ||
               (!top && scroll>documentHeight()-win.innerHeight-200)
             )
             render();
-          raf(animate);
+          if(!stopAnim)
+            raf(animate);
         }
 
         function render(){
@@ -205,7 +207,7 @@
 
           gl.uniform1f(timeLocation, time/1000);
           var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
-          gl.uniform1f(scrollLocation,canvas.getAttribute('stop-on-scroll')=='true'?s:1);
+          gl.uniform1f(scrollLocation,canvas.getAttribute('data-stop-on-scroll')=='true'?s:1);
           gl.uniform2f(resolutionLocation, bounds.width*dpi,bounds.height*dpi);
 
           gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
@@ -215,6 +217,7 @@
           gl.enableVertexAttribArray(vertexPosition);
           gl.drawArrays(gl.TRIANGLES, 0, 6);
           gl.disableVertexAttribArray(vertexPosition);
+          gl.viewport(0,0,bounds.width*dpi,bounds.height*dpi);
         }
         return true;
       }
@@ -233,8 +236,8 @@
         var mountains={
           left:[
             '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj..kkjj',
-            '....kkkjjj..kkkkjkkjjjj.....kkkkkjjjjjj',
-            '...kkjj...kkkkjjjjkkkkjkjjjj.....kkkkjjkkkkjjjjjj',
+            '....kkkjjj..kkkkjkkjjjj.......kkkkjjjjj',
+            '...kkjj...kkkkjjj..kkkjkjjjj.....kkkkjjkkkkjjjjjj',
           ],
           right:[
             '......kkkkjjjkkjjjkkkjjkkkkkjjjjjkjj..kkkjjj',
@@ -281,12 +284,16 @@
         return textureCanvas;
       }
     });
+    return {
+      stop:function(){
+        stopAnim=true;
+      }
+    }
   };
 
-  mountains();
-
-  ;(function(){
+  function initStars(){
     var canvas=querySelector('.Scene-stars');    
+    var stopAnim=false;
     var ctx=getContext(canvas);
     var bounds=getBounds(canvas);
     sizeToBounds(bounds,dpi,canvas);
@@ -326,18 +333,65 @@
         if(random(1)<0.3) newStars.push(createStar());
         stars=newStars;
       }
-      raf(draw);
+      if(!stopAnim)
+        raf(draw);
     }());
-
-  }());
+    return {
+      stop:function(){
+        stopAnim=true;
+      }
+    }
+  };
 
   (function(){
-    forEach(querySelectorAll('.js-HasVH'),function(el){
-      var bounds=getBounds(el);
-      el.style.height=bounds.height+'px';
+    var animMountains=mountains();
+    var animStars=initStars();
+    var lastResize=win.innerWidth;
+    win.addEventListener('resize',function(){
+      var ww=win.innerWidth;
+      if(ww==lastResize) return;
+      lastResize=ww;
+      animMountains.stop();
+      animStars.stop();
+      var canvases=querySelectorAll('.Scene-mountains');
+      forEach(canvases,function(canvas){
+        canvas.removeAttribute('width');
+        canvas.removeAttribute('height');
+      });
+      raf(function(){
+        animMountains=mountains();
+        animStars=initStars();
+      });
     });
   }());
-  (function(){
+
+
+  ;(function(){
+    var lastUpdate=win.innerHeight;
+    function update(){
+      forEach(querySelectorAll('.js-HasVH'),function(el){
+        el.style.height=(win.innerHeight*(parseFloat(el.getAttribute('data-vh'))))+'px';
+      });
+    }
+    update();
+    win.addEventListener('resize',function(){
+      var wh=win.innerHeight;
+      if(Math.abs(wh-lastUpdate)>100){
+        update();
+        lastUpdate=wh;
+      }
+    });
+  }());
+
+  ;(function(){
+    forEach(querySelectorAll('.js-Lazyload'),function(el){
+      var img=document.createElement('img');
+      setAttribute('src',el.getAttribute('data-image'),img);
+      el.appendChild(img);
+    });
+  }())
+
+  ;(function(){
     setAttribute('href','mailto:lucasbbebber@gmail.com',querySelector('.Email'));
   }());
 }());

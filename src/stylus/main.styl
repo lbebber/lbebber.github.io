@@ -22,11 +22,32 @@ a
 
 p.heading
   font-size 1.2em
-  font-style italic
 p
   text-indent 1em
   margin-top 0.5em
   margin-bottom 0.5em
+
+nav
+  position absolute
+  width 100%
+  z-index 2
+  padding-top 20px
+  padding-bottom 20px
+  text-align center
+
+.Nav-link
+  color whiteish
+  font-family font-sans
+  text-decoration none
+  font-weight bold
+  margin-left 50px
+  margin-right 50px
+
+.Nav-link:first-child
+  margin-left 0
+
+.Nav-link:last-child
+  margin-right 0
 
 .text-center
   text-align center
@@ -40,8 +61,8 @@ absolute-fill()
 
 .Header
   position relative
-  height 66vh
-  margin-bottom 120px
+  height 75vh
+  margin-bottom 90px
 
 .Scene
   absolute-fill()
@@ -52,6 +73,8 @@ absolute-fill()
   transform rotate(180deg)
   height 150px
   overflow hidden
+  margin-top -25px
+  pointer-events none
 
 .Scene-sky
   absolute-fill()
@@ -121,7 +144,7 @@ absolute-fill()
 
 section
   padding-bottom 70px
-  margin-bottom 70px
+  margin-bottom 50px
   position relative
   &::after
     content ''
@@ -144,7 +167,8 @@ h2
   font-family font-sans
   font-size 40px
   margin 0
-  margin-bottom 40px
+  padding-top 30px
+  margin-bottom 30px
   &::after
     content ''
     background url('../img/separator.svg') no-repeat
@@ -152,7 +176,7 @@ h2
     width 67px
     height 17px
     margin 0 auto
-    margin-top 10px
+    margin-top 18px
 
 h3
   margin 0
@@ -164,6 +188,7 @@ h3
 .container
   width 700px
   margin 0 auto
+  position relative
 
 
 .Works
@@ -171,13 +196,14 @@ h3
   margin 0
   padding 0
   font-size 0
+  padding-top 20px
 
 .Work
   display block
   margin-bottom 60px
   font-size 0
   &:last-child
-    margin-bottom 0
+    margin-bottom 30px
 
 .Work-subtitle
   font-family serif
@@ -200,6 +226,7 @@ h3
   text-indent 0
   margin-top 1em
   margin-bottom 1em
+
 .Work-image
   border-radius 2px 
   position relative
@@ -215,6 +242,9 @@ h3
   position relative
   box-shadow 1px 4px 25px alpha(purple,0.15)
 
+  img
+    width 100%
+    height 100%
 .Work-link
   display inline-block
   background pink
@@ -254,26 +284,31 @@ h3
   font-family font-sans
   color blackish
   text-decoration none
-  background linear-gradient(180deg,transparent 82%, pink 82%, pink 91%, transparent 91%)
+  background linear-gradient(180deg,transparent 78%, pink 78%, pink 85%, transparent 85%)
   display inline-block
   margin 0 auto
-  font-size 25px
-  margin-bottom 20px
+  margin-top 11px
+  margin-bottom 25px
+  font-size 30px
 
   &:hover
     color pink
 
 .Contact-heading
-  margin-bottom 0em
+  // margin-bottom 0
 
 .Social
-  margin-top 20px
+  margin-top 7px
 
 .Social-link
   font-family font-sans
   display block
-  margin-bottom 5px
   text-decoration none
+  &:hover
+    color blackish
+    text-decoration underline
+    strong,.underline
+      color pink
 @media(max-width:950px) and (min-width:769px)
   .Work-image
     width 300px
@@ -284,24 +319,36 @@ h3
     .Work-text
       padding-right 15px
 @media(max-width: 768px)
+  .Nav-link
+    font-size 20px
+    margin-left 20px
+    margin-right 20px
+    &:first-child
+      margin-left 0
+    &:last-child
+      margin-right 0
+
   body
-    font-size 16px
+    font-size 14px
   section
-    margin-bottom 70px
+    padding-bottom 50px
+    margin-bottom 30px
   .Header
     height 75vh
-    margin-bottom 75px
+    margin-bottom 60px
   .container
     width 100%
-    padding-left 10px
-    padding-right 10px
+    padding-left 20px
+    padding-right 20px
     box-sizing border-box
   .Title
     font-size 40px
   h2
     font-size 35px
+    line-height 1
+    padding-top 30px
     &::after
-      margin-top 6px
+      margin-top 18px
       transform scale(0.8,0.8)
   .Title-Center
     width 100%
@@ -321,7 +368,7 @@ h3
     margin-bottom -100px
   .Scene--bottom
     height 100px
-    margin-top -100px
+    margin-top -30px
   .Scene-mountains--bottom
     margin-bottom 0
   .Email
@@ -348,6 +395,12 @@ h3
     top 0
     left 50% !important
     transform translate(-50%,0)
+  .Social
+    margin-top 14px
+  
+  .Social-link
+    margin-bottom 10px
+    font-size 18px
 
 @media(max-width:450px)
   .Work-image
