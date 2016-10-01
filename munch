@@ -7,13 +7,13 @@ classes='
   Title-Center
   Title-big
   Title-small
+  Title
   Work-image
   Work-text
   Work-description
   Work-subtitle
   Work-title
   Work-link
-  heading
   container
   Social-link
   Scene--bottom
@@ -21,6 +21,8 @@ classes='
   text-center
   Scene-sky
   Contact-heading
+  Nav-link
+  Footer-link
 '
 html=$(cat public/index.html)
 css=$(cat public/css/style.css)
