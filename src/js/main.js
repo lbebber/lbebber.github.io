@@ -429,7 +429,13 @@
   ;(function(){
     forEach(querySelectorAll('.js-Lazyload'),function(el){
       var img=document.createElement('img');
-      setAttribute('src',el.getAttribute('data-image'),img);
+      var hires=(el.getAttribute('data-hires')=='true') && dpi>1;
+      var file=el.getAttribute('data-image');
+      if(hires){
+        var dot=file.lastIndexOf('.');
+        file=file.substr(0,dot)+'@2x'+file.substr(dot);
+      }
+      setAttribute('src',file,img);
       setAttribute('role','presentation',img);
       el.appendChild(img);
     });
