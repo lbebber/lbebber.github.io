@@ -278,6 +278,9 @@
           drawLayer(mountains.right[i],1,1);
           ctx.strokeStyle='transparent';
         }
+        setFillStyle(colors.whiteish,ctx);
+        ctx.arc(middle.x,middle.y,80,0,Math.PI*2);
+        ctx.fill();
         drawLayers(2,colors.pink,colors.green);
         drawLayers(1,colors.purple,colors.pink);
         drawLayers(0,colors.blackish,colors.purple);
