@@ -349,22 +349,30 @@
   (function(){
     var animMountains=mountains();
     var animStars=initStars();
-    var lastResize=win.innerWidth;
+    var lastResizeW=win.innerWidth;
+    var lastResizeH=win.innerHeight;
     win.addEventListener('resize',function(){
       var ww=win.innerWidth;
-      if(ww==lastResize) return;
-      lastResize=ww;
-      animMountains.stop();
-      animStars.stop();
-      var canvases=querySelectorAll('.Scene-mountains');
-      forEach(canvases,function(canvas){
-        canvas.removeAttribute('width');
-        canvas.removeAttribute('height');
-      });
-      raf(function(){
-        animMountains=mountains();
-        animStars=initStars();
-      });
+      var wh=win.innerHeight;
+      if(ww!=lastResizeW){
+        lastResizeW=ww;
+        animMountains.stop();
+        var canvases=querySelectorAll('.Scene-mountains');
+        forEach(canvases,function(canvas){
+          canvas.removeAttribute('width');
+          canvas.removeAttribute('height');
+        });
+        raf(function(){
+          animMountains=mountains();
+        });
+      }
+      if(wh!=lastResizeH){
+        lastResizeH=wh;
+        animStars.stop();
+        raf(function(){
+          animStars=initStars();
+        });
+      }
     });
   }());
 
