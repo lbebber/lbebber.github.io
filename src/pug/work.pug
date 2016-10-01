@@ -1,4 +1,4 @@
-li.Work
+article.Work
   div.Work-text
     h3.Work-title
       | #{title}
@@ -7,6 +7,6 @@ li.Work
     for item in links
       a.Work-link(href=item.link)
         | #{item.label}
-  div.Work-image.js-Lazyload(data-image=image,data-hires='true')
+  figure.Work-image.js-Lazyload.js-Lazyload--hidden(data-image=image,data-hires='true',role='presentation')
 
 

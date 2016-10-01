@@ -428,6 +428,7 @@
 
   ;(function(){
     forEach(querySelectorAll('.js-Lazyload'),function(el){
+      el.classList.remove('js-Lazyload--hidden');
       var img=document.createElement('img');
       var hires=(el.getAttribute('data-hires')=='true') && dpi>1;
       var file=el.getAttribute('data-image');
