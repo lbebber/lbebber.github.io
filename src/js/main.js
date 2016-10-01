@@ -7,6 +7,8 @@
     blackish : '#1B2947',
     green : '#54fad4',
   }
+  var heightRefreshThreshold=100;
+  var virtualWindowHeight=0;
   var win=window;
   var dpi=win.devicePixelRatio;
   var doc=document;
@@ -335,6 +337,35 @@
         });
         if(random(1)<0.3) newStars.push(createStar());
         stars=newStars;
+
+        var scroll=getScroll();
+        var source=(virtualWindowHeight*0.75)-scroll;
+
+        var flares=[
+          {p:1.5,a:0.02,s:350},
+          {p:1,a:0.04,s:100},
+          {p:0.5,a:0.04,s:150},
+          {p:0.3,a:0.06,s:70},
+          {p:-0.17,a:0.16,s:30},
+          {p:-0.3,a:0.06,s:70},
+          {p:-0.6,a:0.08,s:100},
+          {p:-1.2,a:0.06,s:200},
+          {p:-1.8,a:0.02,s:300},
+        ];
+        forEach(flares,function(flare){
+          ctx.globalAlpha=flare.a;
+          var p=flare.p;
+          var ip=1-p;
+          var flarePos=scroll+(source*ip)+((virtualWindowHeight-source)*p);
+          drawStar(
+            (bounds.width/2)*dpi,
+            flarePos*dpi,
+            1,
+            flare.s*dpi,
+            ctx
+          );
+        });
+        ctx.globalAlpha=1;
       }
       if(!stopAnim)
         raf(draw);
@@ -366,7 +397,7 @@
           animMountains=mountains();
         });
       }
-      if(wh!=lastResizeH){
+      if(Math.abs(wh-lastResizeH)>heightRefreshThreshold){
         lastResizeH=wh;
         animStars.stop();
         raf(function(){
@@ -383,11 +414,12 @@
       forEach(querySelectorAll('.js-HasVH'),function(el){
         el.style.height=(win.innerHeight*(parseFloat(el.getAttribute('data-vh'))))+'px';
       });
+      virtualWindowHeight=win.innerHeight;
     }
     update();
     win.addEventListener('resize',function(){
       var wh=win.innerHeight;
-      if(Math.abs(wh-lastUpdate)>100){
+      if(Math.abs(wh-lastUpdate)>heightRefreshThreshold){
         update();
         lastUpdate=wh;
       }
