@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+function size(){
+  stat -f%z $1
+}
+
+total=$((
+  $(size public/index.html) +
+  $(size public/css/style.css) +
+  $(size public/img/separator.svg)
+)) 
+
+kb=$( bc <<< "scale=3; (($total / 1024))")
+echo "$total bytes, $kb kb"
