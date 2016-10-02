@@ -388,6 +388,7 @@
       if(ww!=lastResizeW){
         lastResizeW=ww;
         animMountains.stop();
+        animStars.stop();
         var canvases=querySelectorAll('.Scene-mountains');
         forEach(canvases,function(canvas){
           canvas.removeAttribute('width');
@@ -395,6 +396,7 @@
         });
         raf(function(){
           animMountains=mountains();
+          animStars=initStars();
         });
       }
       if(Math.abs(wh-lastResizeH)>heightRefreshThreshold){
