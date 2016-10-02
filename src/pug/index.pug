@@ -98,7 +98,7 @@ html
     .Scene--bottom
       canvas.Scene-mountains.Scene-mountains--bottom
     script.
-      function lazyLoad(s) {
+      function script(s) {
         var d = window.document,
             b = d.body,
             e = d.createElement("script");
@@ -106,4 +106,4 @@ html
         e.src = s;
         b.appendChild(e);
       }
-      lazyLoad('js/main.js')
+      script('js/main.js')
