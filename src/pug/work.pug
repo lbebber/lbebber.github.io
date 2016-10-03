@@ -4,9 +4,10 @@ article.Work
       | #{title}
       .Work-subtitle #{subtitle}
     p.Work-description #{description}
-    for item in links
-      a.Work-link(href=item.link)
-        | #{item.label}
+    div.Work-links
+      for item in links
+        a.Work-link(href=item.link)
+          | #{item.label}
   figure.Work-image.js-Lazyload(data-image=image,data-hires='true',role='presentation')
 
 
