@@ -281,7 +281,7 @@
           ctx.strokeStyle='transparent';
         }
         setFillStyle(colors.whiteish,ctx);
-        ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*3*dpi,Math.PI,Math.PI*2);
+        ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*2.5*dpi,Math.PI,Math.PI*2);
         ctx.fill();
         drawLayers(2,colors.pink,colors.green);
         drawLayers(1,colors.purple,colors.pink);
