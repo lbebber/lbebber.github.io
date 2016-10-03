@@ -7,7 +7,7 @@
     blackish : '#1B2947',
     green : '#54fad4',
   }
-  var heightRefreshThreshold=100;
+  var heightRefreshThreshold=120;
   var virtualWindowHeight=0;
   var win=window;
   var dpi=win.devicePixelRatio;
@@ -408,7 +408,6 @@
             animStars=initStars();
           });
         }
-        console.log('resize');
       }
       if(resizeTimer!=null){
         clearTimeout(resizeTimer);
