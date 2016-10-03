@@ -39,14 +39,16 @@ nav
   font-family font-sans
   text-decoration none
   font-weight bold
-  margin-left 50px
-  margin-right 50px
+  padding 10px
+  margin 0 40px
+  &:first-child
+    margin-left 0 !important
 
-.Nav-link:first-child
-  margin-left 0
+  &:last-child
+    margin-right 0 !important
 
-.Nav-link:last-child
-  margin-right 0
+  &:hover
+    color pink
 
 .text-center
   text-align center
@@ -83,7 +85,9 @@ absolute-fill()
 
 
 .Scene-stars
-  absolute-fill()
+  position absolute
+  top 0
+  left 0 
   width 100%
   height 100%
 
@@ -292,15 +296,11 @@ h3
   .Work:nth-child(even)
     .Work-text
       padding-right 15px
+
 @media(max-width: 768px)
   .Nav-link
     font-size 16px
-    margin-left 20px
-    margin-right 20px
-    &:first-child
-      margin-left 0
-    &:last-child
-      margin-right 0
+    margin 0 10px
 
   body
     font-size 14px
