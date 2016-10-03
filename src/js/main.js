@@ -239,7 +239,7 @@
           left:[
             '......kkkkjjjkkjjkjkkjjkkkkkjjjjjj..kkjj',
             '....kkkjjj..kkkkjkkjjjj.......kkkkjjjjj',
-            '...kkjj...kkkkjjj..kkkjkjjjj.....kkkkjjkkkkjjjjjj',
+            '...kkjj...kkkkjjj..kkkjkjjjj.....kkkkjjkjjj',
           ],
           right:[
             '......kkkkjjjkkjjjkkkjjkkkkkjjjjjkjj..kkkjjj',
