@@ -382,30 +382,39 @@
     var animStars=initStars();
     var lastResizeW=win.innerWidth;
     var lastResizeH=win.innerHeight;
+    var resizeTimer=null;
     win.addEventListener('resize',function(){
-      var ww=win.innerWidth;
-      var wh=win.innerHeight;
-      if(ww!=lastResizeW){
-        lastResizeW=ww;
-        animMountains.stop();
-        animStars.stop();
-        var canvases=querySelectorAll('.Scene-mountains');
-        forEach(canvases,function(canvas){
-          canvas.removeAttribute('width');
-          canvas.removeAttribute('height');
-        });
-        raf(function(){
-          animMountains=mountains();
-          animStars=initStars();
-        });
+      function resize(){
+        var ww=win.innerWidth;
+        var wh=win.innerHeight;
+        if(ww!=lastResizeW){
+          lastResizeW=ww;
+          animMountains.stop();
+          animStars.stop();
+          var canvases=querySelectorAll('.Scene-mountains');
+          forEach(canvases,function(canvas){
+            canvas.removeAttribute('width');
+            canvas.removeAttribute('height');
+          });
+          raf(function(){
+            animMountains=mountains();
+            animStars=initStars();
+          });
+        }
+        if(Math.abs(wh-lastResizeH)>heightRefreshThreshold){
+          lastResizeH=wh;
+          animStars.stop();
+          raf(function(){
+            animStars=initStars();
+          });
+        }
+        console.log('resize');
       }
-      if(Math.abs(wh-lastResizeH)>heightRefreshThreshold){
-        lastResizeH=wh;
-        animStars.stop();
-        raf(function(){
-          animStars=initStars();
-        });
+      if(resizeTimer!=null){
+        clearTimeout(resizeTimer);
+        resizeTimer=null;
       }
+      resizeTimer=setTimeout(resize,1000);
     });
   }());
 
