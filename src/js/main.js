@@ -343,14 +343,18 @@
 
         var flares=[
           {p:1.5,a:0.02,s:350},
-          {p:1,a:0.04,s:100},
-          {p:0.5,a:0.05,s:150},
-          {p:0.3,a:0.06,s:70},
-          {p:-0.17,a:0.16,s:30},
+          {p:1.3,a:0.03,s:25},
+          {p:1,a:0.03,s:100},
+          {p:0.5,a:0.04,s:150},
+          {p:0.45,a:0.03,s:40},
+          {p:0.25,a:0.06,s:70},
+          {p:-0.19,a:0.1,s:30},
           {p:-0.3,a:0.06,s:70},
-          {p:-0.6,a:0.08,s:100},
-          {p:-1.2,a:0.06,s:200},
-          {p:-1.8,a:0.02,s:300},
+          {p:-0.6,a:0.04,s:45},
+          {p:-0.9,a:0.07,s:30},
+          {p:-1.2,a:0.06,s:25},
+          {p:-1.5,a:0.04,s:50},
+          {p:-1.9,a:0.02,s:100},
         ];
         forEach(flares,function(flare){
           ctx.globalAlpha=flare.a;
@@ -417,14 +421,25 @@
     });
   }());
 
+  function get100vh(){
+    var dummy=document.createElement('div');
+    dummy.style.position='absolute';
+    dummy.style.height='100vh';
+    document.body.appendChild(dummy);
+    var maxHeight=dummy.getBoundingClientRect().height;
+    dummy.remove();
+    if(maxHeight==0) maxHeight=win.innerHeight;
+    return maxHeight;
+  }
 
   ;(function(){
     var lastUpdate=win.innerHeight;
     function update(){
+      var maxHeight=get100vh();
       forEach(querySelectorAll('.js-HasVH'),function(el){
-        el.style.height=(win.innerHeight*(parseFloat(el.getAttribute('data-vh'))))+'px';
+        el.style.height=(maxHeight*(parseFloat(el.getAttribute('data-vh'))))+'px';
       });
-      virtualWindowHeight=win.innerHeight;
+      virtualWindowHeight=maxHeight;
     }
     update();
     win.addEventListener('resize',function(){
