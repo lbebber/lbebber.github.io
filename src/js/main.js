@@ -297,7 +297,7 @@
         glowCtx.save();
         glowCtx.globalCompositeOperation='lighten';
         glowCtx.globalAlpha=0.5;
-        var glowRadius=300*dpi;
+        var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
 
         var gradient=glowCtx.createRadialGradient(
           middle.x*dpi,middle.y*dpi,0,
