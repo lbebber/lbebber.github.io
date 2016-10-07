@@ -16,7 +16,7 @@
   var html=doc.documentElement;
   var shaders={
     vert:'attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}',
-    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*9.0)-t;float x=(sin(w*3.0-(t*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)+-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}',
+    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*10.0)-t;float x=(sin(w*3.0-(t*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)-0.4)/4.0;p.y+=w*0.45*dist*s;}gl_FragColor=texture2D(i,p);}',
   };
 
   function getScroll(){
@@ -39,6 +39,9 @@
     ctx.fillRect(-size/2,-size/2,size,size);
     ctx.restore();
   }
+  function addColorStop(pos,color,gradient){
+    gradient.addColorStop(pos,color); 
+  }
   function querySelector(selector){
     return doc.querySelector(selector);
   }
@@ -47,7 +50,9 @@
     return [].slice.call(nodes);
   }
   function getContext(canvas){
-    return canvas.getContext('2d');
+    return canvas.getContext('2d',{
+    
+    });
   }
   function getBounds(element){
     return element.getBoundingClientRect();
@@ -111,7 +116,8 @@
         function init(){
           try {
             gl = canvas.getContext('experimental-webgl',{
-              premultipliedAlpha:false
+              premultipliedAlpha:false,
+              alpha:true,
             });
           } catch( error ) { }
           if ( !gl ) {
@@ -280,12 +286,65 @@
           drawLayer(mountains.right[i],1,1);
           ctx.strokeStyle='transparent';
         }
-        setFillStyle(colors.whiteish,ctx);
-        ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*2.5*dpi,Math.PI,Math.PI*2);
-        ctx.fill();
         drawLayers(2,colors.pink,colors.green);
         drawLayers(1,colors.purple,colors.pink);
         drawLayers(0,colors.blackish,colors.purple);
+
+        var glow=createCanvas(bounds.width,bounds.height);
+        var glowCtx=getContext(glow);
+        glowCtx.drawImage(textureCanvas,0,0);
+
+        glowCtx.save();
+        glowCtx.globalCompositeOperation='lighten';
+        glowCtx.globalAlpha=0.5;
+        var glowRadius=300*dpi;
+
+        var gradient=glowCtx.createRadialGradient(
+          middle.x*dpi,middle.y*dpi,0,
+          middle.x*dpi,middle.y*dpi,glowRadius
+        );
+        addColorStop(0,colors.whiteish,gradient);
+        addColorStop(0.33,colors.pink,gradient);
+        addColorStop(0.66,colors.purple,gradient);
+        addColorStop(1,'black',gradient);
+        glowCtx.fillStyle=gradient;
+        glowCtx.beginPath();
+        glowCtx.arc(middle.x*dpi,middle.y*dpi,glowRadius,0,Math.PI*2);
+        glowCtx.fill();
+
+        var bowRadius=gridSize*8*dpi;
+        var bow=glowCtx.createRadialGradient(
+          middle.x*dpi,middle.y*dpi,0,
+          middle.x*dpi,middle.y*dpi,bowRadius
+        )
+        addColorStop(0.8,'black',bow);
+        addColorStop(0.85,colors.pink,bow);
+        addColorStop(0.875,colors.whiteish,bow);
+        addColorStop(0.92,colors.green,bow);
+        addColorStop(0.95,colors.purple,bow);
+        addColorStop(1,'black',bow);
+        glowCtx.globalAlpha=0.04;
+        // glowCtx.globalCompositeOperation='source-over';
+        // glowCtx.globalAlpha='1';
+        glowCtx.fillStyle=bow;
+        glowCtx.beginPath();
+        glowCtx.arc(middle.x*dpi,middle.y*dpi,bowRadius,0,Math.PI*2);
+        glowCtx.fill();
+
+        ctx.save();
+        ctx.globalCompositeOperation='source-atop';
+        ctx.drawImage(glow,0,0);
+
+        glowCtx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
+        glowCtx.restore();
+        glowCtx.drawImage(textureCanvas,0,0);
+
+        ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
+        ctx.restore();
+        setFillStyle(colors.whiteish,ctx);
+        ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*2.5*dpi,Math.PI,Math.PI*2);
+        ctx.fill();
+        ctx.drawImage(glow,0,0);
         return textureCanvas;
       }
     });
@@ -314,7 +373,27 @@
       }
     }
 
-    ;(function draw(){
+    var flares=[
+      {p:1.5,a:0.02,s:350},
+      {p:1.7,a:0.01,s:30},
+      {p:1.3,a:0.01,s:35},
+      {p:1,a:0.02,s:100},
+      {p:0.94,a:0.02,s:50},
+      {p:0.85,a:0.03,s:60},
+      {p:0.65,a:0.026,s:50},
+      {p:0.5,a:0.03,s:150},
+      {p:0.47,a:0.04,s:40},
+      {p:0.4,a:0.06,s:50},
+      {p:0.25,a:0.07,s:70},
+      {p:-0.19,a:0.06,s:30},
+      {p:-0.3,a:0.06,s:70},
+      {p:-0.6,a:0.04,s:45},
+      {p:-0.9,a:0.07,s:30},
+      {p:-1.2,a:0.06,s:25},
+      {p:-1.5,a:0.04,s:50},
+      {p:-1.9,a:0.02,s:100},
+    ];
+    ;(function draw(now){
       if(getScroll()<win.innerHeight){
         ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
         setFillStyle(colors.whiteish,ctx);
@@ -341,21 +420,6 @@
         var scroll=getScroll();
         var source=(virtualWindowHeight*0.75)-scroll;
 
-        var flares=[
-          {p:1.5,a:0.02,s:350},
-          {p:1.3,a:0.02,s:35},
-          {p:1,a:0.02,s:100},
-          {p:0.5,a:0.03,s:150},
-          {p:0.45,a:0.03,s:40},
-          {p:0.25,a:0.06,s:70},
-          {p:-0.19,a:0.1,s:30},
-          {p:-0.3,a:0.06,s:70},
-          {p:-0.6,a:0.04,s:45},
-          {p:-0.9,a:0.07,s:30},
-          {p:-1.2,a:0.06,s:25},
-          {p:-1.5,a:0.04,s:50},
-          {p:-1.9,a:0.02,s:100},
-        ];
         forEach(flares,function(flare){
           ctx.globalAlpha=flare.a;
           var p=flare.p;
