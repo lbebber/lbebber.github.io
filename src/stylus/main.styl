@@ -5,7 +5,7 @@ purple = #75517D
 blackish = #1B2947
 green = #54fad4
 
-font-sans='Avenir Next','Segoe ui',Helvetica,sans-serif;
+font-sans='Avenir Next','Segoe ui',Ubuntu,sans-serif;
 font-serif=Athelas,Georgia,serif;
 
 body
@@ -158,8 +158,7 @@ section
     left 50%
     bottom 0
     margin-left - ( @width / 2 )
-    background purple
-    opacity 0.15
+    background alpha(purple,0.15)
 
 h2
   text-align center
@@ -175,6 +174,11 @@ h2
     width 67px
     height 17px
     margin 18px auto 0 auto
+
+.ShadedTitle
+  background: -webkit-linear-gradient(pink, purple,blackish);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
 h3
   margin 0
@@ -288,10 +292,10 @@ h3
   font-family font-sans
   text-decoration none
   color blackish
-  background linear-gradient(180deg,transparent 96%, pink 96%, pink 100%, transparent 100%)
+  background linear-gradient(180deg,transparent 96%, pink 96%, pink 100%)
 
-  &:hover strong,.underline
-      color pink
+  &:hover strong
+    color pink
 
 @media(max-width:950px) and (min-width:769px)
   .Work-image

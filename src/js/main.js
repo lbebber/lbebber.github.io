@@ -16,7 +16,7 @@
   var html=doc.documentElement;
   var shaders={
     vert:'attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}',
-    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*10.0)-t;float x=(sin(w*3.0-(t*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)-0.4)/4.0;p.y+=w*0.45*dist*s;}gl_FragColor=texture2D(i,p);}',
+    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*8.5)-t*1.0;float x=(sin(w*3.0-(t*4.0))+3.0)*0.5;w-=x*0.15;w=w-floor(w);w=(floor(w*4.0)-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}',
   };
 
   function getScroll(){

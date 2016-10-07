@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+# function size(){
+#   stat -f%z $1
+# }
 function size(){
-  stat -f%z $1
+  stat --printf="%s" $1
 }
 
 total=$((
