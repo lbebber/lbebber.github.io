@@ -42,10 +42,10 @@ nav
   padding 10px
   margin 0 40px
   &:first-child
-    margin-left 0 !important
+    margin-left 0
 
   &:last-child
-    margin-right 0 !important
+    margin-right 0
 
   &:hover
     color pink
@@ -176,9 +176,11 @@ h2
     margin 18px auto 0 auto
 
 .ShadedTitle
-  // background: -webkit-linear-gradient(pink, purple,blackish);
-  // -webkit-background-clip: text;
-  // -webkit-text-fill-color: transparent;
+  background: blackish;
+  background: -webkit-linear-gradient(pink,purple,blackish);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
 h3
   margin 0
@@ -298,10 +300,10 @@ h3
     color pink
 
 @media(max-width:950px) and (min-width:769px)
-  .Work-image
+  .Work:nth-child(n) .Work-image
     width 300px
     height 225px
-    margin-left 25px !important
+    margin-left 25px
 
   .Work:nth-child(even)
     .Work-text
@@ -357,15 +359,7 @@ h3
   .Email
     font-size 18px
     margin-bottom 35px
-  .Work-text,.Work-image
-    display block
-    margin-right 0 !important
-    margin-left 0 !important
-    left auto !important
-    right auto !important
-    padding-left 0 !important
-    padding-right 0 !important
-  .Work
+  .Work:nth-child(n) 
     position relative
     padding-top 340px
     margin-bottom 100px
@@ -373,18 +367,24 @@ h3
     margin-bottom 70px
     &:last-child
       margin-bottom 20px
-  .Work-text
-    width 100%
-    text-align center !important
-    padding-left 0 !important
-    font-size 16px
-  .Work-image
-    position absolute
-    top 0
-    left 50% !important
-    transform translate(-50%,0)
-    width 300px
-    height 225px
+    .Work-text, .Work-image
+      display block
+      margin 0
+      left auto
+      right auto
+      padding 0
+    .Work-text
+      width 100%
+      text-align center
+      font-size 16px
+    .Work-image
+      position absolute
+      top 0
+      left 50%
+      width 300px
+      margin-left - (( @width + 12px ) / 2)
+      height 225px
+
   // .Social
     // margin-top 14px
   .Social-link
