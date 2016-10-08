@@ -295,7 +295,7 @@
         glowCtx.drawImage(textureCanvas,0,0);
 
         glowCtx.save();
-        glowCtx.globalCompositeOperation='lighten';
+        // glowCtx.globalCompositeOperation='lighten';
         glowCtx.globalAlpha=0.5;
         var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
 
@@ -306,7 +306,7 @@
         addColorStop(0,colors.whiteish,gradient);
         addColorStop(0.33,colors.pink,gradient);
         addColorStop(0.66,colors.purple,gradient);
-        addColorStop(1,'black',gradient);
+        addColorStop(1,'rgba(0,0,0,0)',gradient);
         glowCtx.fillStyle=gradient;
         glowCtx.beginPath();
         glowCtx.arc(middle.x*dpi,middle.y*dpi,glowRadius,0,Math.PI*2);
@@ -322,7 +322,7 @@
         addColorStop(0.875,colors.whiteish,bow);
         addColorStop(0.92,colors.green,bow);
         addColorStop(0.95,colors.purple,bow);
-        addColorStop(1,'black',bow);
+        addColorStop(1,'rgba(0,0,0,0)',bow);
         glowCtx.globalAlpha=0.04;
         // glowCtx.globalCompositeOperation='source-over';
         // glowCtx.globalAlpha='1';
