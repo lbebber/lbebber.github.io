@@ -296,7 +296,7 @@
 
         glowCtx.save();
         glowCtx.globalCompositeOperation='lighten';
-        glowCtx.globalAlpha=0.53;
+        glowCtx.globalAlpha=0.5;
         var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
 
         var gradient=glowCtx.createRadialGradient(
@@ -374,8 +374,9 @@
     }
 
     var flares=[
-      {p:1.5,a:0.02,s:350},
+      {p:2.1,a:0.01,s:50},
       {p:1.7,a:0.01,s:30},
+      {p:1.5,a:0.02,s:350},
       {p:1.3,a:0.01,s:35},
       {p:1,a:0.02,s:100},
       {p:0.94,a:0.02,s:50},
