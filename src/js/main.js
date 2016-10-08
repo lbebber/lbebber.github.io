@@ -295,8 +295,8 @@
         glowCtx.drawImage(textureCanvas,0,0);
 
         glowCtx.save();
-        // glowCtx.globalCompositeOperation='lighten';
-        glowCtx.globalAlpha=0.5;
+        glowCtx.globalCompositeOperation='lighten';
+        glowCtx.globalAlpha=0.53;
         var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
 
         var gradient=glowCtx.createRadialGradient(
