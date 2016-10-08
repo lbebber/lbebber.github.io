@@ -323,7 +323,7 @@
         addColorStop(0.92,colors.green,bow);
         addColorStop(0.95,colors.purple,bow);
         addColorStop(1,'rgba(0,0,0,0)',bow);
-        glowCtx.globalAlpha=0.06;
+        glowCtx.globalAlpha=0.05;
         // glowCtx.globalCompositeOperation='source-over';
         // glowCtx.globalAlpha='1';
         glowCtx.fillStyle=bow;
