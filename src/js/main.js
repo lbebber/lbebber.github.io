@@ -212,11 +212,8 @@
           if ( !currentProgram ) return;
 
           time=new Date().getTime()-startTime;
-
           gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
-
           gl.useProgram(currentProgram);
-
           gl.uniform1f(timeLocation, time/1000);
           var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
           gl.uniform1f(scrollLocation,canvas.getAttribute('data-stop-on-scroll')=='true'?s:1);
@@ -225,7 +222,7 @@
           gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
 
           var vertexPosition;
-          gl.vertexAttribPointer( vertexPosition, 2, gl.FLOAT, false, 0, 0 );
+          gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
           gl.enableVertexAttribArray(vertexPosition);
           gl.drawArrays(gl.TRIANGLES, 0, 6);
           gl.disableVertexAttribArray(vertexPosition);
