@@ -533,6 +533,8 @@
   }())
 
   ;(function(){
-    setAttribute('href','mailto:lucasbbebber@gmail.com',querySelector('.Email'));
+    var email=querySelector('.Email');
+    setAttribute('href','mailto:lucasbbebber@gmail.com',email);
+    email.innerHTML='<strong>lucasbbebber</strong>@<strong>gmail</strong>.com';
   }());
 }());
