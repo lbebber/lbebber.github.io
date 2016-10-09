@@ -88,6 +88,7 @@
   function mountains(){
     var stopAnim=false;
     var canvases=querySelectorAll('.Scene-mountains');
+    var texture=null;
     forEach(canvases,function(canvas){
       var bounds=getBounds(canvas);
       sizeToBounds(bounds,dpi,canvas);
@@ -95,7 +96,10 @@
         x:bounds.width/2,
         y:bounds.height/2
       }
-      var textureMountains=createMountains();
+      if(texture==null){
+        texture=createMountains();
+      }
+      var textureMountains=texture;
       var createdGL=createGL();
 
       function createGL(){
@@ -323,9 +327,7 @@
         addColorStop(0.92,colors.green,bow);
         addColorStop(0.95,colors.purple,bow);
         addColorStop(1,'rgba(0,0,0,0)',bow);
-        glowCtx.globalAlpha=0.05;
-        // glowCtx.globalCompositeOperation='source-over';
-        // glowCtx.globalAlpha='1';
+        glowCtx.globalAlpha=0.045;
         glowCtx.fillStyle=bow;
         glowCtx.beginPath();
         glowCtx.arc(middle.x*dpi,middle.y*dpi,bowRadius,0,Math.PI*2);
@@ -342,6 +344,7 @@
         ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
         ctx.restore();
         setFillStyle(colors.whiteish,ctx);
+        ctx.beginPath();
         ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*2.5*dpi,Math.PI,Math.PI*2);
         ctx.fill();
         ctx.drawImage(glow,0,0);

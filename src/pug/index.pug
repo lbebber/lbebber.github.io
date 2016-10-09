@@ -25,15 +25,17 @@ html
     main
       .container
         section
-          h2.ShadedTitle#about About
+          h2#about
+            | About
+            .ShadedTitle(role='presentation') About
           p.heading Developer working on creating rich, interesting, and at the same time performant and usable experiences for the web.
           p Focusing on user interfaces, performance, and animation. Also works with back-end development, design, and illustration.
-          p Currently working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>. Based in Rio Grande do Sul - Brazil.
+          p Working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>. Based in Rio Grande do Sul - Brazil.
         section
           h2#work Work
           div.Works
             - var title='Rain Effect'
-            - var subtitle='Experiment/Codrops'
+            - var subtitle='Effect/Codrops'
             - var description='Relatively lightweight realistic raindrops-on-a-window effect, with WebGL.'
             - var image='img/rain.jpg'
             -
@@ -44,7 +46,7 @@ html
             include work
 
             - var title='Heat Haze Effect'
-            - var subtitle='Experiment/Codrops'
+            - var subtitle='Effect/Codrops'
             - var description='Relatively lightweight realistic heat haze effect, with WebGL.'
             - var link='http://tympanus.net/codrops/2016/05/03/animated-heat-distortion-effects-webgl/'
             - var label='See the project'
