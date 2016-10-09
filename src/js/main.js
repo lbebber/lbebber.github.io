@@ -101,6 +101,7 @@
       }
       var textureMountains=texture;
       var createdGL=createGL();
+      canvas.style.opacity=1;
 
       function createGL(){
         var vertexShader = shaders.vert;
