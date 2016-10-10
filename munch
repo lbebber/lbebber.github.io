@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+alphabet=$(echo {{a..z},{A..Z}})
+alphabet=($alphabet)
+echo $alphabet
 classes='
   Title-separator
   Title-Center-right
@@ -17,6 +20,7 @@ classes='
   Work-links
   Work-link
   container
+  heading
   Social-link
   Scene--bottom
   Scene-mountains--bottom
@@ -31,8 +35,9 @@ css=$(cat public/css/style.css)
 incr=0
 for class in $classes
 do
-  html=$(echo $html | sed -e "s/$class/a$incr/g")
-  css=$(echo $css | sed -e "s/$class/a$incr/g")
+  char=${alphabet[$incr]}
+  html=$(echo $html | sed -e "s/$class/$char/g")
+  css=$(echo $css | sed -e "s/$class/$char/g")
   ((incr++))
 done
 
