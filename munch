@@ -2,7 +2,6 @@
 
 alphabet=$(echo {{a..z},{A..Z}})
 alphabet=($alphabet)
-echo $alphabet
 classes='
   Title-separator
   Title-Center-right

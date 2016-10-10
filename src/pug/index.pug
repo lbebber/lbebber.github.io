@@ -11,9 +11,9 @@ html
         a.Nav-link(href='#work') Work
         a.Nav-link(href='#contact') Contact
       .Scene
-        .Scene-sky
-        canvas.Scene-stars
-        canvas.Scene-mountains(data-stop-on-scroll='true')
+        .Scene-sky(role='presentation')
+        canvas.Scene-stars(role='presentation')
+        canvas.Scene-mountains(data-stop-on-scroll='true',role='presentation')
       h1.Title
         span.Title-big.Title-Center(aria-label='Lucas Bebber') 
           span.Title-Center-left(aria-hidden='true') Lucas 
