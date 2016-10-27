@@ -101,7 +101,7 @@
       }
       var textureMountains=texture;
       var createdGL=createGL();
-      canvas.style.opacity=1;
+      canvas.style.opacity=0.9999;
 
       function createGL(){
         var vertexShader = shaders.vert;
@@ -120,7 +120,7 @@
 
         function init(){
           try {
-            gl = canvas.getContext('experimental-webgl',{
+            gl = canvas.getContext('webgl',{
               premultipliedAlpha:false,
               alpha:true,
             });
