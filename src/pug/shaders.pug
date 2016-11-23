@@ -28,7 +28,7 @@ script(id='fs',type='x-shader/fragment').
     float distorted=global-(distortion*0.45);
     float local=distorted-floor(distorted);
     float stripedDistance=mod(local*4.0,1.0);
-    float striped=(power(local*4.0,15.0)+-0.4)/4.0;
+    float striped=(power(local*4.0,12.0)+-0.4)/4.0;
     return vec3(striped,stripedDistance,local);
   }
   void main(){
