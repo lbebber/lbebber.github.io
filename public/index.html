@@ -21,8 +21,8 @@ float power(float value,float p){
 }
 vec3 getDisplacement(float dist){
   float global=(dist*8.0)-t;
-  float distortion=(sin(global*2.0-(t*0.9))+1.0)*0.5;
-  float distorted=global-(distortion*0.50);
+  float distortion=(sin(global*3.0-(t*0.7))+1.0)*0.5;
+  float distorted=global-(distortion*0.45);
   float local=distorted-floor(distorted);
   float stripedDistance=mod(local*4.0,1.0);
   float striped=(power(local*4.0,15.0)+-0.4)/4.0;
@@ -30,6 +30,7 @@ vec3 getDisplacement(float dist){
 }
 void main(){
   vec2 pos=gl_FragCoord.xy/r;
+  pos.y-=0.5/r.y;
   pos=vec2(pos.x,1.0-pos.y);
   if(pos.y>0.5){
     float dist=(pos.y-0.5)/0.5;
@@ -52,14 +53,19 @@ void main(){
         p=pow(p,10.0);
         p*=0.2;
       }
-      pos.x+=sin((t*10.0)+(pos.y*130.0))*(sunDistance*0.05)*p*s;
+      pos.x+=sin((t*10.0)+(pos.y*190.0))*(sunDistance*0.05)*p*s;
     }
   }
   vec4 textureColor=texture2D(i,pos);
   float a=textureColor.a;
   if(a<1.0){
     vec3 matte=vec3(1.0,0.92,0.85);
-    float a2=a*0.5;
+    float a2=a*1.0;
+    float sunDistance=(sunSize/r.x)*0.85;
+    float p=1.0-(abs(pos.x-0.5)/sunDistance);
+    if(p>0.0){
+      a2=a*0.0;
+    }
     textureColor=vec4((textureColor.rgb*a2)+(matte*(1.0-a2)),a);
   }
   gl_FragColor=textureColor;
