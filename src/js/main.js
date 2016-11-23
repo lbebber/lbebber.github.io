@@ -14,10 +14,12 @@
   var doc=document;
   var body=doc.body;
   var html=doc.documentElement;
+  var sunSize=100;
   var shaders={
     vert:'attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}',
-    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*8.5)-t*1.0;float x=(sin(w*3.0-(t*4.0))+3.0)*0.5;w-=x*0.15;w=w-floor(w);w=(floor(w*4.0)-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}',
+    frag:'uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 pixel=vec2(1.0)/r;vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*8.5)-t*1.0;float x=(sin(w*3.0-(t*4.0))+3.0)*0.5;w-=x*0.15;w=w-floor(w);w=(floor(w*4.0)-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}',
   };
+  shaders.frag=document.getElementById('fs').textContent;
 
   function getScroll(){
     return win.pageYOffset || html.scrollTop;
@@ -108,6 +110,7 @@
         var fragmentShader = shaders.frag;
         var currentProgram;
         var timeLocation;
+        var sunSizeLocation;
         var resolutionLocation;
         var scrollLocation;
         var buffer;
@@ -139,6 +142,8 @@
           timeLocation = getUniformLocation(currentProgram, 't');
           resolutionLocation = getUniformLocation(currentProgram, 'r');
           scrollLocation=getUniformLocation(currentProgram,'s');
+          sunSizeLocation=getUniformLocation(currentProgram,'sunSize');
+
 
           function texParameteri(){
             return gl.texParameteri.apply(gl,arguments);
@@ -219,6 +224,7 @@
           var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
           gl.uniform1f(scrollLocation,canvas.getAttribute('data-stop-on-scroll')=='true'?s:1);
           gl.uniform2f(resolutionLocation, bounds.width*dpi,bounds.height*dpi);
+          gl.uniform1f(sunSizeLocation,sunSize);
 
           gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
 
@@ -237,7 +243,7 @@
         sizeToBounds(bounds,dpi,textureCanvas);
         var ctx=getContext(textureCanvas);
         var factor=20;
-        if(win.innerWidth<700) factor=18;
+        if(win.innerWidth<700) factor=15;
         var cols=Math.round(bounds.width/factor);
         // if(bounds.width>1200){
         //   cols=55;
@@ -319,10 +325,10 @@
           middle.x*dpi,middle.y*dpi,0,
           middle.x*dpi,middle.y*dpi,bowRadius
         )
-        addColorStop(0.8,'black',bow);
-        addColorStop(0.85,colors.pink,bow);
-        addColorStop(0.875,colors.whiteish,bow);
-        addColorStop(0.92,colors.green,bow);
+        addColorStop(0.7,'black',bow);
+        addColorStop(0.8,colors.pink,bow);
+        addColorStop(0.84,colors.whiteish,bow);
+        addColorStop(0.9,colors.green,bow);
         addColorStop(0.95,colors.purple,bow);
         addColorStop(1,'rgba(0,0,0,0)',bow);
         glowCtx.globalAlpha=0.045;
@@ -343,7 +349,8 @@
         ctx.restore();
         setFillStyle(colors.whiteish,ctx);
         ctx.beginPath();
-        ctx.arc(middle.x*dpi,middle.y*dpi,gridSize*2.5*dpi,Math.PI,Math.PI*2);
+        sunSize=gridSize*2.5*dpi;
+        ctx.arc(middle.x*dpi,middle.y*dpi,sunSize,Math.PI,Math.PI*2);
         ctx.fill();
         ctx.drawImage(glow,0,0);
         return textureCanvas;
@@ -375,14 +382,14 @@
     }
 
     var flares=[
-      {p:2.1,a:0.01,s:50},
+      {p:2.1,a:0.005,s:50},
       {p:1.7,a:0.01,s:30},
-      {p:1.5,a:0.02,s:350},
-      {p:1.3,a:0.01,s:35},
-      {p:1,a:0.02,s:100},
+      {p:1.5,a:0.01,s:350},
+      {p:1.3,a:0.008,s:35},
+      {p:1,a:0.01,s:100},
       {p:0.94,a:0.02,s:50},
-      {p:0.85,a:0.03,s:60},
-      {p:0.65,a:0.026,s:50},
+      {p:0.85,a:0.026,s:60},
+      {p:0.65,a:0.02,s:50},
       {p:0.5,a:0.03,s:150},
       {p:0.47,a:0.04,s:40},
       {p:0.4,a:0.06,s:50},

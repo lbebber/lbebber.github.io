@@ -2,5 +2,70 @@ script(id='vs',type='x-shader/vertex').
   attribute vec3 position;void main(){gl_Position=vec4(position,1.0);}
 
 script(id='fs',type='x-shader/fragment').
-  uniform float t;uniform float s;uniform vec2 r;uniform sampler2D i;void main(){vec2 p=gl_FragCoord.xy/r;p=vec2(p.x,1.0-p.y);if(p.y>0.5){float dist=(p.y-0.5)/0.5;float w=(dist*9.0)-t;float x=(sin(w*3.0-(t*3.0))+1.0)*0.5;w-=x*0.25;w=w-floor(w);w=(floor(w*4.0)+-0.4)/4.0;p.y+=w*0.35*dist*s;}gl_FragColor=texture2D(i,p);}
+  uniform float t;
+  uniform float s;
+  uniform float sunSize;
+  uniform vec2 r;
+  uniform sampler2D i;
+
+  float power(float value,float p){
+    float f=floor(value);
+    float r=value-f;
+    if(r>0.5){
+      r=(r*2.0)-1.0;
+      r=pow(r,1.0/p);
+      r=(r/2.0)+0.5;
+    }else{
+      r*=2.0;
+      r=pow(r,p);
+      r/=2.0;
+    }
+    return r+f;
+  }
+  vec3 getDisplacement(float dist){
+    float global=(dist*8.0)-t;
+    float distortion=(sin(global*2.0-(t*0.9))+1.0)*0.5;
+    float distorted=global-(distortion*0.50);
+    float local=distorted-floor(distorted);
+    float stripedDistance=mod(local*4.0,1.0);
+    float striped=(power(local*4.0,15.0)+-0.4)/4.0;
+    return vec3(striped,stripedDistance,local);
+  }
+  void main(){
+    vec2 pos=gl_FragCoord.xy/r;
+    pos=vec2(pos.x,1.0-pos.y);
+    if(pos.y>0.5){
+      float dist=(pos.y-0.5)/0.5;
+      vec3 displacement=getDisplacement(dist);
+      float w=displacement.x;
+      pos.y+=w*0.35*dist*s;
+    }else{
+      float sunDistance=(sunSize/r.x)*0.85;
+      float falloff=1.5;
+      falloff=1.0+falloff;
+      float p=1.0-(abs(pos.x-0.5)/(sunDistance*falloff));
+      if(p>0.0){
+        // p=pow(p,19.0);
+        // p=clamp(p,0.0,1.0);
+        float cutoff=1.0-(1.0/falloff);
+        if(p>cutoff){
+          p=1.0;
+        }else{
+          p=(p/cutoff);
+          p=pow(p,10.0);
+          p*=0.2;
+        }
+        pos.x+=sin((t*10.0)+(pos.y*130.0))*(sunDistance*0.05)*p*s;
+      }
+    }
+    vec4 textureColor=texture2D(i,pos);
+    float a=textureColor.a;
+    if(a<1.0){
+      vec3 matte=vec3(1.0,0.92,0.85);
+      float a2=a*0.5;
+      textureColor=vec4((textureColor.rgb*a2)+(matte*(1.0-a2)),a);
+    }
+    gl_FragColor=textureColor;
+  }
+
 
