@@ -286,11 +286,11 @@ h3
   text-align center
   text-decoration none
   display inline-block
-  margin 15px auto 40px auto
+  margin 5px auto 40px auto
   font-size 30px
 
 .Social
-  margin-top 10px
+  margin-top 5px
 
 .Social-link
   line-height 2
@@ -299,10 +299,20 @@ h3
   font-family font-sans
   text-decoration none
   color blackish
-  background linear-gradient(180deg,transparent 96%, pink 96%, pink 100%)
+  background linear-gradient(180deg,transparent 94%, pink 94%, pink 100%)
+  background-repeat repeat-x
+  background-position 0 10px
+  transition background-position 80ms, color 80ms
+  strong
+    color pink
+    transition color 80ms
 
   &:hover strong
-    color pink
+    color blackish
+
+  &:hover
+    // color pink
+    background-position 0 0
 
 @media(max-width:950px) and (min-width:769px)
   .Work:nth-child(n) .Work-image
