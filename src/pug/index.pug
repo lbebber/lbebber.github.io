@@ -7,9 +7,24 @@ html
 
     header.Header.js-HasVH(data-vh='0.75')
       nav
-        a.Nav-link(href='#about') About
-        a.Nav-link(href='#work') Work
-        a.Nav-link(href='#contact') Contact
+        a.Nav-link(href='#about')
+          span About
+        a.Nav-link(href='#work') 
+          span Work
+        a.Nav-link(href='#contact') 
+          span Contact
+      // .ContactMenu
+      //   div
+      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+      //       span lucasbbebber at gmail dot com
+      //   div
+      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+      //       span Twitter
+      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+      //       span Codepen
+      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+      //       span Dribbble
+
       .Scene
         .Scene-sky(role='presentation')
         canvas.Scene-stars(role='presentation')

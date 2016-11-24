@@ -390,10 +390,10 @@
       {p:0.94,a:0.02,s:50},
       {p:0.85,a:0.026,s:60},
       {p:0.65,a:0.02,s:50},
-      {p:0.5,a:0.03,s:150},
-      {p:0.47,a:0.04,s:40},
-      {p:0.4,a:0.06,s:50},
-      {p:0.25,a:0.07,s:70},
+      {p:0.5,a:0.02,s:150},
+      {p:0.47,a:0.025,s:40},
+      {p:0.4,a:0.04,s:50},
+      {p:0.25,a:0.05,s:70},
       {p:-0.19,a:0.06,s:30},
       {p:-0.3,a:0.06,s:70},
       {p:-0.6,a:0.04,s:45},
@@ -545,4 +545,41 @@
     setAttribute('href','mailto:lucasbbebber@gmail.com',email);
     email.innerHTML='<strong>lucasbbebber</strong>@<strong>gmail</strong>.com';
   }());
+
+  ;(function(){
+    var links=querySelectorAll('.Nav-link');
+    forEach(links,function(link){
+      link.addEventListener('click',function(event){
+        event.preventDefault();
+        var target=link.getAttribute('href');
+        target=querySelector(target);
+        var targetBounds=getBounds(target);
+        var targetPos=Math.round(targetBounds.top)-60;
+        var documentHeight = Math.max(
+          body.scrollHeight,
+          body.offsetHeight,
+          html.clientHeight,
+          html.scrollHeight,
+          html.offsetHeight 
+        );
+        if(targetPos+win.innerHeight>documentHeight){
+          targetPos=documentHeight-win.innerHeight;
+        }
+        win.scrollTo(0,targetPos);
+        body.classList.add('no-transition');
+        body.style.transform="translate3d(0,"+(targetPos)+"px,0)";
+        var timing=500+(targetPos*0.15);
+        requestAnimationFrame(function(){
+          body.classList.remove('no-transition');
+          body.classList.add('yes-transition');
+          body.style.transitionDuration=timing+"ms";
+          body.style.transform="translate3d(0,"+(0)+"px,0)";
+          setTimeout(function(){
+            body.classList.remove('yes-transition');
+          },timing);
+        });
+      });
+    });
+  }());
 }());
+

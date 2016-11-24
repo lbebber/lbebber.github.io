@@ -17,6 +17,11 @@ body
   font-size 20px
   line-height 1.6
 
+.no-transition
+  transition none
+
+.yes-transition
+  transition transform 500ms cubic-bezier(0.645, 0.045, 0.355, 1.000)
 a
   color pink
 
@@ -33,21 +38,66 @@ nav
   padding-bottom 20px
   text-align center
 
-.Nav-link
+.ContactMenu
+  position absolute
+  width 100%
+  z-index 2
+  padding 20px 20px
+  box-sizing border-box
+  text-align right
+
+.ContactMenu-link
   color whiteish
   font-family font-sans
   text-decoration none
   font-weight bold
-  padding 10px
-  margin 0 40px
-  transition color 80ms
+  padding 10px 10px
+  margin 0 10px
+  font-size 0.8em
+
+  span
+    transition color 80ms, background-position 80ms ease-in
+    background linear-gradient(180deg,transparent 94%, pink 94%, pink 100%)
+    background-repeat repeat-x
+    background-position 0 10px
+    display inline-block
+    padding-bottom 10px
+
   &:first-child
     margin-left 0
 
   &:last-child
     margin-right 0
 
-  &:hover
+  &:hover span
+    transition color 80ms, background-position 80ms ease-out
+    background-position 0 0
+    color pink
+.Nav-link
+  color whiteish
+  font-family font-sans
+  text-decoration none
+  font-weight bold
+  padding 10px 40px
+  margin 0 10px
+
+  span
+    transition color 80ms, background-position 80ms ease-in
+    background linear-gradient(180deg,transparent 94%, pink 94%, pink 100%)
+    background-repeat repeat-x
+    background-position 0 10px
+    display inline-block
+    padding-bottom 10px
+
+  &:first-child
+    margin-left 0
+
+  &:last-child
+    margin-right 0
+
+  &:hover span
+    transition color 80ms, background-position 80ms ease-out
+    background-position 0 0
     color pink
 
 .text-center
@@ -327,7 +377,8 @@ h3
 @media(max-width: 768px)
   .Nav-link
     font-size 16px
-    margin 0 10px
+    margin 0
+    padding 10px 20px
 
   body
     font-size 16px
