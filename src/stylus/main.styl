@@ -131,7 +131,7 @@ absolute-fill()
 .Scene-sky
   absolute-fill()
   background purple
-  background linear-gradient(#1B2947, #282F51, #36365A, #443C63, #52426B, #614973, #704F7B, #815482, #935988, #A55D8D, #B86291, #CB6692, #DD6B93, #EC7691, #F18C90, #F3A195, #F3B6A0, #F3C9B2, #F3DCC7, #F6EDE1)
+  background linear-gradient(#1B2947, #282F51, #36365A, #443C63, #52426B, #614973, #704F7B, #815482, #935988, #A55D8D, #B86291, #CB6692, #DD6B93, #EC7691, #F18C90, #F3A195, #F3B6A0, #F3C9B2, #F3DCC7, #FFEDDB)
 
 
 .Scene-stars
@@ -311,7 +311,7 @@ h3
   font-family font-sans
   text-decoration none
   font-weight bold
-  box-shadow 1px 4px 20px alpha(purple,0.2)
+  box-shadow 3px 7px 20px alpha(purple,0.2)
   transition background 80ms, color 80ms
 
   &:hover
@@ -375,6 +375,10 @@ h3
       padding-right 15px
 
 @media(max-width: 768px)
+  .Scene-sky
+    background-size 100% 97%
+    background-repeat repeat-x
+    background-color whiteish
   .Nav-link
     font-size 16px
     margin 0

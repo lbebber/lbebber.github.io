@@ -302,40 +302,40 @@
         var glowCtx=getContext(glow);
         glowCtx.drawImage(textureCanvas,0,0);
 
-        glowCtx.save();
-        glowCtx.globalCompositeOperation='lighten';
-        glowCtx.globalAlpha=0.5;
-        var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
+        // glowCtx.save();
+        // glowCtx.globalCompositeOperation='lighten';
+        // glowCtx.globalAlpha=0.6;
+        // var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/3);
 
-        var gradient=glowCtx.createRadialGradient(
-          middle.x*dpi,middle.y*dpi,0,
-          middle.x*dpi,middle.y*dpi,glowRadius
-        );
-        addColorStop(0,colors.whiteish,gradient);
-        addColorStop(0.33,colors.pink,gradient);
-        addColorStop(0.66,colors.purple,gradient);
-        addColorStop(1,'rgba(0,0,0,0)',gradient);
-        glowCtx.fillStyle=gradient;
-        glowCtx.beginPath();
-        glowCtx.arc(middle.x*dpi,middle.y*dpi,glowRadius,0,Math.PI*2);
-        glowCtx.fill();
+        // var gradient=glowCtx.createRadialGradient(
+        //   middle.x*dpi,middle.y*dpi,0,
+        //   middle.x*dpi,middle.y*dpi,glowRadius
+        // );
+        // // addColorStop(0,colors.whiteish,gradient);
+        // addColorStop(0.0,colors.pink,gradient);
+        // addColorStop(0.5,colors.purple,gradient);
+        // addColorStop(1,'rgba(0,0,0,0)',gradient);
+        // glowCtx.fillStyle=gradient;
+        // glowCtx.beginPath();
+        // glowCtx.arc(middle.x*dpi,middle.y*dpi,glowRadius,0,Math.PI*2);
+        // glowCtx.fill();
 
-        var bowRadius=gridSize*8*dpi;
-        var bow=glowCtx.createRadialGradient(
-          middle.x*dpi,middle.y*dpi,0,
-          middle.x*dpi,middle.y*dpi,bowRadius
-        )
-        addColorStop(0.7,'black',bow);
-        addColorStop(0.8,colors.pink,bow);
-        addColorStop(0.84,colors.whiteish,bow);
-        addColorStop(0.9,colors.green,bow);
-        addColorStop(0.95,colors.purple,bow);
-        addColorStop(1,'rgba(0,0,0,0)',bow);
-        glowCtx.globalAlpha=0.045;
-        glowCtx.fillStyle=bow;
-        glowCtx.beginPath();
-        glowCtx.arc(middle.x*dpi,middle.y*dpi,bowRadius,0,Math.PI*2);
-        glowCtx.fill();
+        // var bowRadius=gridSize*8*dpi;
+        // var bow=glowCtx.createRadialGradient(
+        //   middle.x*dpi,middle.y*dpi,0,
+        //   middle.x*dpi,middle.y*dpi,bowRadius
+        // )
+        // addColorStop(0.7,'black',bow);
+        // addColorStop(0.8,colors.pink,bow);
+        // addColorStop(0.84,colors.whiteish,bow);
+        // addColorStop(0.9,colors.green,bow);
+        // addColorStop(0.95,colors.purple,bow);
+        // addColorStop(1,'rgba(0,0,0,0)',bow);
+        // glowCtx.globalAlpha=0.045;
+        // glowCtx.fillStyle=bow;
+        // glowCtx.beginPath();
+        // glowCtx.arc(middle.x*dpi,middle.y*dpi,bowRadius,0,Math.PI*2);
+        // glowCtx.fill();
 
         ctx.save();
         ctx.globalCompositeOperation='source-atop';

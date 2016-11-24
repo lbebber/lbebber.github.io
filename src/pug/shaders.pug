@@ -42,7 +42,7 @@ script(id='fs',type='x-shader/fragment').
       pos.y+=w*0.35*dist*s;
     }else{
       float sunDistance=(sunSize/r.x)*0.85;
-      float falloff=1.5;
+      float falloff=2.5;
       falloff=1.0+falloff;
       float p=1.0-(abs(pos.x-0.5)/(sunDistance*falloff));
       if(p>0.0){
@@ -53,10 +53,10 @@ script(id='fs',type='x-shader/fragment').
           p=1.0;
         }else{
           p=(p/cutoff);
-          p=pow(p,10.0);
-          p*=0.2;
+          p=pow(p,2.0);
+          p*=0.3;
         }
-        pos.x+=sin((t*7.0)+(pos.y*190.0))*(sunDistance*0.05)*p*s;
+        pos.x+=sin((t*7.0)+(pos.y*150.0))*(sunDistance*0.05)*p*s;
       }
     }
     vec4 textureColor=texture2D(i,pos);
