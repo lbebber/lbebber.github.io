@@ -377,7 +377,7 @@
         s:0,
         speed:0.01+random(0.035),
         growing:true,
-        maxSize:1+(Math.pow(random(1),3)*10),
+        maxSize:1+(Math.pow(random(1),4)*10),
       }
     }
 
@@ -423,7 +423,7 @@
             ctx
           );
         });
-        if(random(1)<0.3) newStars.push(createStar());
+        if(random(1)<0.0000005*(win.innerWidth*win.innerHeight)) newStars.push(createStar());
         stars=newStars;
 
         var scroll=getScroll();
@@ -554,7 +554,7 @@
         var target=link.getAttribute('href');
         target=querySelector(target);
         var targetBounds=getBounds(target);
-        var targetPos=Math.round(targetBounds.top)-60;
+        var targetPos=Math.round(targetBounds.top)-80;
         var documentHeight = Math.max(
           body.scrollHeight,
           body.offsetHeight,
