@@ -4,111 +4,111 @@ html
     meta(name='viewport',content='width=device-width, initial-scale=1')
     link(rel='stylesheet',href='css/style.css')
   body
+    .ScrollWrapper
+      header.Header.js-HasVH(data-vh='0.75')
+        nav
+          a.Nav-link(href='#about')
+            span About
+          a.Nav-link(href='#work') 
+            span Work
+          a.Nav-link(href='#contact') 
+            span Contact
+        // .ContactMenu
+        //   div
+        //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+        //       span lucasbbebber at gmail dot com
+        //   div
+        //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+        //       span Twitter
+        //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+        //       span Codepen
+        //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
+        //       span Dribbble
 
-    header.Header.js-HasVH(data-vh='0.75')
-      nav
-        a.Nav-link(href='#about')
-          span About
-        a.Nav-link(href='#work') 
-          span Work
-        a.Nav-link(href='#contact') 
-          span Contact
-      // .ContactMenu
-      //   div
-      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
-      //       span lucasbbebber at gmail dot com
-      //   div
-      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
-      //       span Twitter
-      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
-      //       span Codepen
-      //     a.ContactMenu-link(href='mailto:lucasbbebber@gmail.com')
-      //       span Dribbble
+        .Scene
+          .Scene-sky(role='presentation')
+          canvas.Scene-stars(role='presentation')
+          canvas.Scene-mountains(data-stop-on-scroll='true',role='presentation')
+        h1.Title
+          span.Title-big.Title-Center(aria-label='Lucas Bebber') 
+            span.Title-Center-left(aria-hidden='true') Lucas 
+            span.Title-Center-right(aria-hidden='true') Bebber
+          span.Title-small.Title-Center(aria-label='Creative Developer')
+            span.Title-Center-left(aria-hidden='true') Creative 
+            span.Title-Center-right(aria-hidden='true') Developer
+          div.Title-separator.js-Lazyload(role='presentation',data-image='img/separator-green.svg')
+      main
+        .container
+          section
+            h2#about About
+            p.heading Developer working on creating rich, interesting, and at the same time performant and usable experiences for the web.
+            p Focusing on user interfaces, performance, and animation. Also works with back-end development, design, and illustration.
+            p Working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>. Based in Rio Grande do Sul - Brazil.
+          section
+            h2#work Work
+            div.Works
+              - var title='Rain Effect'
+              - var subtitle='Effect/Codrops'
+              - var description='Relatively lightweight realistic raindrops-on-a-window effect, with WebGL.'
+              - var image='img/rain.jpg'
+              -
+                var links=[
+                  {label:'View demo',link:'http://tympanus.net/Development/RainEffect/'},
+                  {label:'Read the article',link:'http://tympanus.net/codrops/rain-water-effect-experiments/'}
+                ]
+              include work
 
-      .Scene
-        .Scene-sky(role='presentation')
-        canvas.Scene-stars(role='presentation')
-        canvas.Scene-mountains(data-stop-on-scroll='true',role='presentation')
-      h1.Title
-        span.Title-big.Title-Center(aria-label='Lucas Bebber') 
-          span.Title-Center-left(aria-hidden='true') Lucas 
-          span.Title-Center-right(aria-hidden='true') Bebber
-        span.Title-small.Title-Center(aria-label='Creative Developer')
-          span.Title-Center-left(aria-hidden='true') Creative 
-          span.Title-Center-right(aria-hidden='true') Developer
-        div.Title-separator.js-Lazyload(role='presentation',data-image='img/separator-green.svg')
-    main
-      .container
-        section
-          h2#about About
-          p.heading Developer working on creating rich, interesting, and at the same time performant and usable experiences for the web.
-          p Focusing on user interfaces, performance, and animation. Also works with back-end development, design, and illustration.
-          p Working at <a href='http://gardenestudio.com.br'>Garden Estúdio</a>. Based in Rio Grande do Sul - Brazil.
-        section
-          h2#work Work
-          div.Works
-            - var title='Rain Effect'
-            - var subtitle='Effect/Codrops'
-            - var description='Relatively lightweight realistic raindrops-on-a-window effect, with WebGL.'
-            - var image='img/rain.jpg'
-            -
-              var links=[
-                {label:'View demo',link:'http://tympanus.net/Development/RainEffect/'},
-                {label:'Read the article',link:'http://tympanus.net/codrops/rain-water-effect-experiments/'}
-              ]
-            include work
+              - var title='Heat Haze Effect'
+              - var subtitle='Effect/Codrops'
+              - var description='Relatively lightweight realistic heat haze effect, with WebGL.'
+              - var link='http://tympanus.net/codrops/2016/05/03/animated-heat-distortion-effects-webgl/'
+              - var label='See the project'
+              - var image='img/haze.jpg'
+              -
+                var links=[
+                  {label:'View demo',link:'http://tympanus.net/Tutorials/HeatDistortionEffect/index3.html'},
+                  {label:'Read the article',link:"http://tympanus.net/codrops/animated-heat-distortion-effects-webgl/"}
+                ]
+              include work
 
-            - var title='Heat Haze Effect'
-            - var subtitle='Effect/Codrops'
-            - var description='Relatively lightweight realistic heat haze effect, with WebGL.'
-            - var link='http://tympanus.net/codrops/2016/05/03/animated-heat-distortion-effects-webgl/'
-            - var label='See the project'
-            - var image='img/haze.jpg'
-            -
-              var links=[
-                {label:'View demo',link:'http://tympanus.net/Tutorials/HeatDistortionEffect/index3.html'},
-                {label:'Read the article',link:"http://tympanus.net/codrops/animated-heat-distortion-effects-webgl/"}
-              ]
-            include work
+              - var title='Storytelling Map'
+              - var subtitle='Storytelling/Codrops'
+              - var description='Animated map for interactive storytelling.'
+              - var image='img/map.png'
+              -
+                var links=[
+                  {label:'View demo',link:'http://tympanus.net/Development/StorytellingMap/'},
+                  {label:'Read the article',link:"http://tympanus.net/codrops/animated-map-path-for-interactive-storytelling/"}
+                ]
+              include work
 
-            - var title='Storytelling Map'
-            - var subtitle='Storytelling/Codrops'
-            - var description='Animated map for interactive storytelling.'
-            - var image='img/map.png'
-            -
-              var links=[
-                {label:'View demo',link:'http://tympanus.net/Development/StorytellingMap/'},
-                {label:'Read the article',link:"http://tympanus.net/codrops/animated-map-path-for-interactive-storytelling/"}
-              ]
-            include work
+              - var title='Elastic Progress'
+              - var subtitle='Interface Animation/Codrops'
+              - var description='SVG animation for a playful download button.'
+              - var image='img/elastic.png'
+              -
+                var links=[
+                  {label:'View demo',link:'http://tympanus.net/Development/ElasticProgress/'},
+                  {label:'Read the article',link:"http://tympanus.net/codrops/elastic-progress/"}
+                ]
 
-            - var title='Elastic Progress'
-            - var subtitle='Interface Animation/Codrops'
-            - var description='SVG animation for a playful download button.'
-            - var image='img/elastic.png'
-            -
-              var links=[
-                {label:'View demo',link:'http://tympanus.net/Development/ElasticProgress/'},
-                {label:'Read the article',link:"http://tympanus.net/codrops/elastic-progress/"}
-              ]
+              include work
 
-            include work
+          footer
+            h2#contact Contact
+            .text-center
+              .Contact-heading You can drop me a line at
+              a.Email.Footer-link <strong>lucasbbebber</strong> at <strong>gmail</strong> dot com
+              .Contact-heading You can find me on
+              .Social
+                a.Footer-link.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<strong>lbebber</strong>
+                br
+                a.Footer-link.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<strong>lucasbebber</strong>
+                br
+                a.Footer-link.Social-link(href='http://dribbble.com/lbebber') <strong>dribbble</strong>.com/<strong>lbebber</strong>
 
-        footer
-          h2#contact Contact
-          .text-center
-            .Contact-heading You can drop me a line at
-            a.Email.Footer-link <strong>lucasbbebber</strong> at <strong>gmail</strong> dot com
-            .Contact-heading You can find me on
-            .Social
-              a.Footer-link.Social-link(href='http://codepen.io/lbebber') <strong>codepen</strong>.io/<strong>lbebber</strong>
-              br
-              a.Footer-link.Social-link(href='http://twitter.com/lucasbebber') <strong>twitter</strong>.com/<strong>lucasbebber</strong>
-              br
-              a.Footer-link.Social-link(href='http://dribbble.com/lbebber') <strong>dribbble</strong>.com/<strong>lbebber</strong>
-
-    .Scene--bottom
-      canvas.Scene-mountains.Scene-mountains--bottom
+      .Scene--bottom
+        canvas.Scene-mountains.Scene-mountains--bottom
     include shaders
     script.
       function script(s) {
