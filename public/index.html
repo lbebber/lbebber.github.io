@@ -20,8 +20,8 @@ float power(float value,float p){
   return r+f;
 }
 vec3 getDisplacement(float dist){
-  float global=(dist*8.0)-t;
-  float distortion=(sin(global*2.0-(t*1.1))+1.0)*0.5;
+  float global=(dist*6.0)-t*0.9;
+  float distortion=(sin(global*2.0-(t*0.5))+1.0)*0.55;
   float distorted=global-(distortion*0.45);
   float local=distorted-floor(distorted);
   float stripedDistance=mod(local*4.0,1.0);

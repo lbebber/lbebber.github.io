@@ -304,18 +304,28 @@
         glowCtx.drawImage(textureCanvas,0,0);
 
         // glowCtx.save();
-        // glowCtx.globalCompositeOperation='lighten';
-        // glowCtx.globalAlpha=0.6;
-        // var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/3);
+        // glowCtx.globalCompositeOperation='screen';
+        // glowCtx.globalAlpha=1;
+        // var glowRadius=Math.max(300*dpi,(bounds.width*dpi)/4);
 
         // var gradient=glowCtx.createRadialGradient(
         //   middle.x*dpi,middle.y*dpi,0,
         //   middle.x*dpi,middle.y*dpi,glowRadius
         // );
         // // addColorStop(0,colors.whiteish,gradient);
-        // addColorStop(0.0,colors.pink,gradient);
-        // addColorStop(0.5,colors.purple,gradient);
-        // addColorStop(1,'rgba(0,0,0,0)',gradient);
+        // // addColorStop(0.0,colors.pink,gradient);
+        // // addColorStop(0.5,colors.purple,gradient);
+        // // addColorStop(1,'rgba(0,0,0,0)',gradient);
+        // addColorStop(0,'#e89c5d',gradient);
+        // addColorStop(0.11,'#e86328',gradient);
+        // addColorStop(0.22,'#dc1d00',gradient);
+        // addColorStop(0.33,'#c10000',gradient);
+        // addColorStop(0.44,'#990000',gradient);
+        // addColorStop(0.55,'#6c0000',gradient);
+        // addColorStop(0.66,'#490000',gradient);
+        // addColorStop(0.77,'#490000',gradient);
+        // addColorStop(0.88,'#280000',gradient);
+        // addColorStop(0.99,'#000000',gradient);
         // glowCtx.fillStyle=gradient;
         // glowCtx.beginPath();
         // glowCtx.arc(middle.x*dpi,middle.y*dpi,glowRadius,0,Math.PI*2);
