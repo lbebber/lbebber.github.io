@@ -312,7 +312,7 @@ h3
   text-decoration none
   font-weight bold
   box-shadow 3px 7px 20px alpha(purple,0.2)
-  transition background 80ms, color 80ms
+  transition background 120ms, color 120ms
 
   &:hover
     background blackish
@@ -352,7 +352,7 @@ h3
   background linear-gradient(180deg,transparent 94%, pink 94%, pink 100%)
   background-repeat repeat-x
   background-position 0 10px
-  transition background-position 80ms, color 80ms
+  transition background-position 80ms ease-in, color 80ms
   strong
     color pink
     transition color 80ms
@@ -363,6 +363,7 @@ h3
   &:hover
     // color pink
     background-position 0 0
+    transition background-position 80ms ease-out, color 80ms
 
 @media(max-width:950px) and (min-width:769px)
   .Work:nth-child(n) .Work-image
