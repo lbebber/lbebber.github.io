@@ -88,6 +88,7 @@
     setAttribute('height',bounds.height*dpi,element);
   }
 
+
   function mountains(){
     var stopAnim=false;
     var canvases=querySelectorAll('.Scene-mountains');
@@ -414,7 +415,8 @@
       {p:-1.9,a:0.02,s:100},
     ];
     ;(function draw(now){
-      if(getScroll()<win.innerHeight){
+      var scroll=getScroll();
+      if(scroll<win.innerHeight){
         ctx.clearRect(0,0,bounds.width*dpi,bounds.height*dpi);
         setFillStyle(colors.whiteish,ctx);
         var newStars=[];
@@ -437,7 +439,6 @@
         if(random(1)<0.0000005*(win.innerWidth*win.innerHeight)) newStars.push(createStar());
         stars=newStars;
 
-        var scroll=getScroll();
         var source=(virtualWindowHeight*0.75)-scroll;
 
         forEach(flares,function(flare){
@@ -550,6 +551,66 @@
       el.appendChild(img);
     });
   }())
+
+  var videos=querySelectorAll('.Work-video').map(function(video){
+    var bounds=getBounds(video);
+    bounds={top:bounds.top+getScroll(),height:bounds.height};
+    var r={
+      video:video,
+      bounds:bounds,
+      initialized:false,
+      playing:false,
+    }
+    video.addEventListener('play',function(){
+      r.playing=true;
+      video.classList.add('Work-video--playing');
+      video.classList.remove('Work-video--paused');
+    });
+    video.addEventListener('pause',function(){
+      r.playing=false;
+      video.classList.remove('Work-video--playing');
+      video.classList.add('Work-video--paused');
+    });
+    document.addEventListener('touchstart',function videoTouchstart(){
+      initializeVideo();
+      document.removeEventListener('touchstart',videoTouchstart);
+    });
+    function initializeVideo(){
+      if(!r.initialized){
+        video.play();
+        video.pause();
+        video.classList.add('Work-video--paused');
+        r.initialized=true;
+      }
+    }
+    return r;
+  });
+
+  ;(function(){
+    var lastScroll=0;
+    ;(function updateVideos(){
+      var scroll=getScroll();
+      // console.log(scroll,virtualWindowHeight);
+      if(scroll!=lastScroll){
+        var scrollMiddle=scroll+(virtualWindowHeight/2);
+        forEach(videos,function(video){
+          var dist=120;
+          var middle=video.bounds.top+(video.bounds.height/2);
+          // console.log(middle);
+          if(scrollMiddle>middle-dist && scrollMiddle<middle+dist){
+            if(!video.playing){
+              video.video.play();
+            }
+          }else{
+            if(video.playing){
+              video.video.pause();
+            }
+          }
+        });
+      }
+      raf(updateVideos);
+    }());
+  }());
 
   ;(function(){
     var email=querySelector('.Email');
@@ -675,7 +736,7 @@
         //   streaks=streaks.concat(makeStreaks(streak.obj,streak.color,streak.num,streak.padding,streak.w));
         // });
 
-        requestAnimationFrame(function(){
+        raf(function(){
           var start=Date.now();
           var time=Date.now();
           var fps=60;
@@ -711,7 +772,7 @@
             //   transitionCtx.fillRect(x*curDPI,y*curDPI,width*curDPI,height*curDPI);
             // });
             wrapper.style.transform="translate3d(0,"+pos+"px,0)";
-            if(cur<1 || lastDists.length>0) requestAnimationFrame(updateScroll);
+            if(cur<1 || lastDists.length>0) raf(updateScroll);
             else{
               // transitionCanvas.style.display="none";
             }
