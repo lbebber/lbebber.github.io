@@ -125,8 +125,8 @@
 
         function init(){
           try {
-            gl = canvas.getContext('experimental-webgl',{
-              premultipliedAlpha:false,
+            gl = canvas.getContext('webgl',{
+              premultipliedAlpha:true,
               alpha:true,
             });
           } catch( error ) { }
@@ -220,6 +220,7 @@
           if ( !currentProgram ) return;
 
           time=new Date().getTime()-startTime;
+          gl.clearColor(0,0,0,0);
           gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
           gl.useProgram(currentProgram);
           gl.uniform1f(timeLocation, time/1000);
@@ -525,6 +526,7 @@
         el.style.height=(maxHeight*(parseFloat(el.getAttribute('data-vh'))))+'px';
       });
       virtualWindowHeight=maxHeight;
+      updateVideosBounds();
     }
     update();
     win.addEventListener('resize',function(){
@@ -552,15 +554,25 @@
     });
   }())
 
-  var videos=querySelectorAll('.Work-video').map(function(video){
-    var bounds=getBounds(video);
+
+  function updateVideoBounds(video){
+    var bounds=getBounds(video.video);
     bounds={top:bounds.top+getScroll(),height:bounds.height};
+    video.bounds=bounds;
+  }
+  function updateVideosBounds(){
+    if(typeof videos=="undefined") return;
+    forEach(videos,updateVideoBounds);
+  }
+
+  var videos=querySelectorAll('.Work-video').map(function(video){
     var r={
       video:video,
-      bounds:bounds,
+      bounds:null,
       initialized:false,
       playing:false,
     }
+    updateVideoBounds(r);
     video.addEventListener('play',function(){
       r.playing=true;
       video.classList.add('Work-video--playing');

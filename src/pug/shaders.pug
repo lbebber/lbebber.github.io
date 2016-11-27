@@ -71,7 +71,7 @@ script(id='fs',type='x-shader/fragment').
       }
       textureColor=vec4((textureColor.rgb*a2)+(matte*(1.0-a2)),a);
     }
-    gl_FragColor=textureColor;
+    gl_FragColor=vec4(textureColor.rgb*textureColor.a,textureColor.a);
   }
 
 

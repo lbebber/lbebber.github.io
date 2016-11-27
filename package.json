@@ -9,7 +9,7 @@
     "pug": "pug src/pug/index.pug -o public/",
     "svg": "svgo -f src/svg/ -o public/img/",
     "css": "stylus src/stylus/main.styl -c -o public/css/style.css",
-    "js": "uglifyjs src/js/main.js --mangle --compress passes=3 --source-map public/js/main.map.js --source-map-url js/main.map.js -o public/js/main.js",
+    "js": "uglifyjs src/js/main.js --mangle --compress passes=3 --source-map public/js/main.map.js --source-map-url /js/main.map.js -o public/js/main.js",
     "build": "npm run pug && npm run svg && npm run css && npm run js",
     "package": "npm run build && ./munch",
     "start": "serve --compress public/"

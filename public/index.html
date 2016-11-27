@@ -68,7 +68,7 @@ void main(){
     }
     textureColor=vec4((textureColor.rgb*a2)+(matte*(1.0-a2)),a);
   }
-  gl_FragColor=textureColor;
+  gl_FragColor=vec4(textureColor.rgb*textureColor.a,textureColor.a);
 }</script><script>function script(s) {
   var d = window.document,
       b = d.body,
@@ -77,4 +77,4 @@ void main(){
   e.src = s;
   b.appendChild(e);
 }
-script('js/main.js?0001')</script></body></html>
+script('js/main.js')</script></body></html>
