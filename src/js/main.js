@@ -571,6 +571,7 @@
       video.classList.remove('Work-video--playing');
       video.classList.add('Work-video--paused');
     });
+    video.classList.add('Work-video--paused');
     document.addEventListener('touchstart',function videoTouchstart(){
       initializeVideo();
       document.removeEventListener('touchstart',videoTouchstart);
@@ -579,7 +580,6 @@
       if(!r.initialized){
         video.play();
         video.pause();
-        video.classList.add('Work-video--paused');
         r.initialized=true;
       }
     }
@@ -590,13 +590,11 @@
     var lastScroll=0;
     ;(function updateVideos(){
       var scroll=getScroll();
-      // console.log(scroll,virtualWindowHeight);
       if(scroll!=lastScroll){
         var scrollMiddle=scroll+(virtualWindowHeight/2);
         forEach(videos,function(video){
           var dist=120;
           var middle=video.bounds.top+(video.bounds.height/2);
-          // console.log(middle);
           if(scrollMiddle>middle-dist && scrollMiddle<middle+dist){
             if(!video.playing){
               video.video.play();
