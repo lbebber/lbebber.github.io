@@ -125,7 +125,7 @@
 
         function init(){
           try {
-            gl = canvas.getContext('webgl',{
+            gl = canvas.getContext('experimental-webgl',{
               premultipliedAlpha:true,
               alpha:true,
             });
