@@ -651,7 +651,7 @@
         var target=link.getAttribute('href');
         target=querySelector(target);
         var targetBounds=getBounds(target);
-        var targetPos=Math.round(targetBounds.top)-80;
+        var targetPos=Math.round(targetBounds.top)-(win.innerWidth<=768?60:80);
         var documentHeight = Math.max(
           body.scrollHeight,
           body.offsetHeight,
