@@ -208,24 +208,32 @@
         function animate(){
           var top=canvas.getAttribute('data-stop-on-scroll')=='true';
           var scroll=getScroll();
-          if((top && scroll<win.innerHeight) ||
-              (!top && scroll>documentHeight()-win.innerHeight-200)
-            )
+          if(
+            (top && scroll<win.innerHeight) ||
+            (!top && scroll>documentHeight()-win.innerHeight-200)
+          ){
             render();
+          }
           if(!stopAnim)
             raf(animate);
         }
 
+        var renderedStatic=false;
+        var lastS=-1;
         function render(){
           if ( !currentProgram ) return;
+
+          var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
+          if(s==0 && lastS==0) return;
+          lastS=s;
+          console.log('render');
 
           time=new Date().getTime()-startTime;
           gl.clearColor(0,0,0,0);
           gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
           gl.useProgram(currentProgram);
           gl.uniform1f(timeLocation, time/1000);
-          var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
-          gl.uniform1f(scrollLocation,canvas.getAttribute('data-stop-on-scroll')=='true'?s:1);
+          gl.uniform1f(scrollLocation,canvas.getAttribute('data-stop-on-scroll')=='true'?s:0);
           gl.uniform2f(resolutionLocation, bounds.width*dpi,bounds.height*dpi);
           gl.uniform1f(sunSizeLocation,sunSize);
 
@@ -403,10 +411,10 @@
       {p:0.94,a:0.025,s:50},
       {p:0.85,a:0.036,s:60},
       {p:0.65,a:0.03,s:50},
-      {p:0.5,a:0.025,s:150},
-      {p:0.47,a:0.045,s:40},
-      {p:0.4,a:0.045,s:50},
-      {p:0.25,a:0.05,s:70},
+      {p:0.5,a:0.035,s:150},
+      {p:0.47,a:0.05,s:40},
+      {p:0.4,a:0.055,s:50},
+      {p:0.25,a:0.07,s:70},
       {p:-0.19,a:0.06,s:30},
       {p:-0.3,a:0.06,s:70},
       {p:-0.6,a:0.04,s:45},
