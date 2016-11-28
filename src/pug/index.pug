@@ -127,13 +127,4 @@ html
       .Scene--bottom
         canvas.Scene-mountains.Scene-mountains--bottom
     include shaders
-    script.
-      function script(s) {
-        var d = window.document,
-            b = d.body,
-            e = d.createElement("script");
-        e.async = true;
-        e.src = s;
-        b.appendChild(e);
-      }
-      script('js/main.js?0002')
+    script(src='js/main.js?0002')
