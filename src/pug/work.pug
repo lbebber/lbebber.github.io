@@ -8,6 +8,7 @@ article.Work
       for item in links
         a.Work-link(href=item.link)
           | #{item.label}
-  figure.Work-image.js-Lazyload(data-image=image,data-hires='true',role='presentation')
-    video.Work-video(preload="metadata",playsinline,webkit-playsinline,loop,muted)
-      source(src='video/'+video+'.mp4')
+  a(href=links[0].link)
+    figure.Work-image.js-Lazyload(data-image=image,data-hires='true',role='presentation')
+      video.Work-video(preload="metadata",playsinline,webkit-playsinline,loop,muted)
+        source(src='video/'+video+'.mp4')
