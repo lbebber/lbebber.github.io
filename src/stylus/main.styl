@@ -79,6 +79,7 @@ nav
     transition color 80ms, background-position 80ms ease-out
     background-position 0 0
     color pink
+
 .Nav-link
   color whiteish
   font-family font-sans
@@ -88,12 +89,20 @@ nav
   margin 0 10px
 
   span
-    transition color 80ms, background-position 80ms ease-in
-    background linear-gradient(180deg,transparent 94%, pink 94%, pink 100%)
-    background-repeat repeat-x
-    background-position 0 10px
     display inline-block
     padding-bottom 10px
+    position relative
+    &::after
+      content ''
+      position absolute
+      bottom 0
+      left 0
+      right 0
+      height 3px
+      display block
+      background pink
+      transform scale(1,0) translate3d(0,-10px,0)
+      transition transform 80ms ease-in
 
   &:first-child
     margin-left 0
@@ -102,9 +111,11 @@ nav
     margin-right 0
 
   &:hover span
-    transition color 80ms, background-position 80ms ease-out
-    background-position 0 0
+    transition color 80ms
     color pink
+    &::after
+      transition transform 80ms ease-out
+      transform scale(1,1) translate3d(0,0,0);
 
 .text-center
   text-align center
@@ -331,11 +342,24 @@ h3
   text-decoration none
   font-weight bold
   box-shadow 3px 7px 20px alpha(purple,0.2)
-  transition background 120ms, color 120ms
+  transition background 120ms, color 120ms, transform 20ms
 
   &:hover
     background blackish
     color pink
+
+  &>.Work-link-text
+    transition transform 20ms
+    position relative
+    display inline-block
+
+  &:active
+    // transform scale(0.92,0.92) perspective(200px) rotateX(-3deg)
+    background green
+    color blackish
+    transition none
+    &>.Work-link-text
+      transform scale(0.92,0.92)
 
   &:first-child
     margin-right 10px
