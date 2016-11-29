@@ -226,7 +226,6 @@
           var s=Math.max(0,1-(getScroll()/(win.innerHeight*0.5)));
           if(s==0 && lastS==0) return;
           lastS=s;
-          console.log('render');
 
           time=new Date().getTime()-startTime;
           gl.clearColor(0,0,0,0);
