@@ -635,6 +635,12 @@
     email.innerHTML='<strong>lucasbbebber</strong>@<strong>gmail</strong>.com';
   }());
 
+  var blockHashChange=false;
+  window.addEventListener('hashchange',function(event){
+    if(blockHashChange)
+      event.preventDefault();
+  })
+
   ;(function(){
     // var curDPI=dpi;
     // var transitionCanvas=createCanvas(win.innerWidth,win.innerHeight,curDPI);
@@ -656,7 +662,11 @@
         var target=link.getAttribute('href');
         var offset=win.innerWidth<=768?60:80;
         if(target!='#about') offset=30;
+        blockHashChange=true;
         window.history.pushState('',{},target);
+        requestAnimationFrame(function(){
+          blockHashChange=false;
+        });
         target=querySelector(target);
         var targetBounds=getBounds(target);
         var targetPos=Math.round(targetBounds.top)-offset;
