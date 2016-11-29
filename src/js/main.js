@@ -655,7 +655,8 @@
         // transitionCanvas.style.display="block";
         var target=link.getAttribute('href');
         var offset=win.innerWidth<=768?60:80;
-        if(target!='#about') offset=35;
+        if(target!='#about') offset=30;
+        window.history.pushState('',{},target);
         target=querySelector(target);
         var targetBounds=getBounds(target);
         var targetPos=Math.round(targetBounds.top)-offset;
